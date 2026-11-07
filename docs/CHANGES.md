@@ -1,0 +1,73 @@
+# 改动记录
+
+本文件是 [NOTICE.md](../NOTICE.md) 要求的「修改说明」，按主题列出相对上游 Tandoor Recipes 的改动，以及每一处的入口文件。提交历史按同样的主题拆分，`git log --oneline` 可以逐条对应。
+
+## 一、界面中文化
+
+| 内容 | 文件 |
+|---|---|
+| 1120 个界面文案译为简体中文，新增 `AppName`、`Home` 等键 | `vue3/src/locales/zh_Hans.json` |
+| 品牌词在英文包里替换为 Dishbook，并补上被漏掉的基础单位键 | `vue3/src/locales/en.json` |
+| 默认语言改为「先看用户显式选择，再退回 `LANGUAGE_CODE`」，不再跟随 `Accept-Language` | `cookbook/helper/locale_default.py`、`recipes/settings.py` |
+| 帮助文档首页汉化 | `docs/index.md` |
+
+背景：上游用 `django.middleware.locale.LocaleMiddleware`，在没有 cookie 时会读浏览器语言。中文用户从终端点开链接（浏览器声明 `en-US`）会进到英文界面，而手动粘贴的浏览器因为存过 `django_language` cookie 反而是中文。现在只有用户主动切换过语言才跟随选择。
+
+## 二、品牌更名
+
+| 内容 | 文件 |
+|---|---|
+| 字标组件：图标 + 真实文本，换名只改语言包 | `vue3/src/components/display/BrandWordmark.vue` |
+| 顶栏、登录页品牌区、浏览器标题改用组件与 `$t('AppName')` | `apps/tandoor/Tandoor.vue`、`components/account/AuthLayout.vue` |
+| 后端默认应用名与导航图标 | `cookbook/templatetags/theming_tags.py` |
+| API 文档标题、邮件主题前缀、邀请邮件文案 | `recipes/settings.py`、`cookbook/serializer.py` |
+| 系统页与基础模板 | `cookbook/templates/system.html`、`cookbook/templates/base.html` |
+| 主题选项改为「食单 浅色 / 食单 深色」 | `vue3/src/components/settings/CosmeticSettings.vue` |
+
+上游的 `brand_logo.svg` 里 "Tandoor" 是矢量字形而非文本，无法直接改字，因此拆成「图片图标 + 文本」。
+
+**未改动**：GitHub 链接、「从 Tandoor 导入」功能名（指上游真实产品）、`recipes/` 与 `apps/tandoor/` 等包名目录名。
+
+## 三、会话有效期
+
+| 内容 | 文件 |
+|---|---|
+| 登录时记录起点；超过 `SESSION_MAX_AGE` 后强制登出，API 返回 401 | `cookbook/helper/session_limits.py` |
+| 空闲 5 分钟过期（`SESSION_IDLE_TIMEOUT`）+ 绝对上限 3 小时（`SESSION_MAX_AGE`） | `recipes/settings.py`、`.env.template` |
+| 60 秒心跳续期、20 秒检查上限、用响应头 `X-Session-Max-Age-Remaining` 校正倒计时 | `vue3/src/utils/sessionGuard.ts` |
+| 到期弹窗（不可关闭，只能重新登录） | `vue3/src/components/dialogs/SessionMaxAgeDialog.vue` |
+| 401/403 统一处理，登录页一次性提示票据（刷新后不再重复出现） | `vue3/src/utils/sessionWatcher.ts`、`utils/sessionStorage.ts`、`pages/account/LoginPage.vue` |
+
+## 四、用餐计划日历
+
+| 内容 | 文件 |
+|---|---|
+| 行高由当天条目数反推，条目不再溢出到下一周 | `vue3/src/components/display/MealPlanView.vue` |
+| 条目拆成「定位壳 + 卡片」，条目间有真实间距 | `components/display/MealPlanCalendarItem.vue` |
+| 空白格显示「＋ 添加」占位；周数改为窄轨 | 同上 |
+| 工具条改为「‹ 今天 › + 日历图标」 | `components/display/MealPlanCalendarHeader.vue` |
+| 手机端改为按天议程 | `components/display/MealPlanAgenda.vue` |
+| 首页两天窗口 + 「查看整周」弹窗 | `components/display/HorizontalMealPlanWindow.vue` |
+
+## 五、工程化（本轮新增）
+
+| 内容 | 文件 |
+|---|---|
+| 日历几何抽成纯函数：`visibleRange` / `slotsPerRow` / `computeMetrics` / `rowHeight` | `vue3/src/utils/mealplanLayout.ts` |
+| 17 个单测覆盖跨周条目、槽位上下限、行高不溢出、深色紧凑布局 | `vue3/src/utils/__tests__/mealplanLayout.spec.ts` |
+| `npm run test` / `test:watch` | `vue3/package.json` |
+| 深色模式 token 化（`--mp-*`，浅色 + 深色两套） | `MealPlanView.vue`、`MealPlanCalendarItem.vue`、`MealPlanCalendarHeader.vue` |
+| 修复 `GET /setup/` 500（headless 模式下 `reverse('account_login')` 不存在） | `cookbook/views/views.py`、`recipes/settings.py` |
+| 4 条 AI 超时用例 patch 到正确的符号 | `cookbook/tests/api/test_api_ai_timeout.py` |
+| 主题测试断言更新为新品牌 | `cookbook/tests/other/test_theming.py` |
+| 19 条上游遗留失败改为带原因的 `xfail`，逐条记录 | `docs/KNOWN_ISSUES.md` |
+| 构建/同步/灌数据/截图/校验脚本从临时目录迁到 `scripts/` | `scripts/` |
+| 修复同步脚本：刷新被 `ManifestStaticFilesStorage` 冻结的 `manifest.<hash>.json` | `scripts/sync_static.py` |
+
+## 六、文档
+
+| 内容 | 文件 |
+|---|---|
+| 使用手册（单文件 HTML，9 张实拍截图内嵌，可离线分发与打印） | `docs/食单使用手册.html` |
+| 已知问题清单（19 条 xfail 的真实报错与判断） | `docs/KNOWN_ISSUES.md` |
+| 项目说明与运行方式 | `README.md`、`NOTICE.md` |
