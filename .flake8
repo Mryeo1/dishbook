@@ -1,0 +1,26 @@
+[flake8]
+extend-ignore =
+    # Whitespace before ':' - Required for black compatibility
+    E203,
+    # Line break occurred before a binary operator - Required for black compatibility
+    W503,
+    # Comparison to False should be 'if cond is False:' or 'if not cond:'
+    E712
+exclude =
+    .git,
+    **/__pycache__,
+        **/.git,
+        **/.svn,
+        **/.hg,
+        **/CVS,
+        **/.DS_Store,
+        .vscode,
+        **/*.pyc
+per-file-ignores=
+    cookbook/apps.py:F401
+    # demo fixtures are aligned data tables, not prose: the visual indent is on purpose
+    scripts/seed_demo_data.py:E127,E128
+    # models are imported for their side effects (search preferences must survive a reset)
+    scripts/reset_demo_data.py:F401
+max-line-length = 179
+
