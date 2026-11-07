@@ -1,0 +1,19 @@
+# keep line endings stable across Windows / macOS / Linux contributors
+* text=auto eol=lf
+
+# binaries
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.xcf binary
+*.sqlite3 binary
+
+# generated / vendored files that must not be diffed as text
+yarn.lock -diff
+package-lock.json -diff

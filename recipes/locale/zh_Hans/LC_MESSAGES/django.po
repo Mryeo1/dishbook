@@ -1,0 +1,107 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-24 18:06+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: .\recipes\plugins\enterprise_plugin\api.py:154
+msgid "Plan or product not found"
+msgstr "未找到套餐或产品"
+
+#: .\recipes\plugins\enterprise_plugin\helper\permission_helper.py:58
+msgid ""
+"You do not have the required permissions to view this page! You need to have "
+"the following modules licensed: "
+msgstr "您没有查看此页面所需的权限！您需要拥有以下模块的授权："
+
+#: .\recipes\plugins\enterprise_plugin\helper\permission_helper.py:76
+msgid "You are not logged in and therefore cannot view this page!"
+msgstr "您尚未登录，因此无法查看此页面！"
+
+#: .\recipes\plugins\enterprise_plugin\helper\permission_helper.py:79
+msgid "You do not have the required modules to view this page!"
+msgstr "您没有查看此页面所需的模块！"
+
+#: .\recipes\plugins\enterprise_plugin\helper\permission_helper.py:90
+msgid "You do not have the required module to view this page!"
+msgstr "您没有查看此页面所需的模块！"
+
+#: .\recipes\plugins\enterprise_plugin\helper\stripe_payments.py:26
+#: .\recipes\plugins\enterprise_plugin\helper\stripe_payments.py:55
+msgid "You do not have the required permissions to view this page!"
+msgstr "您没有查看此页面所需的权限！"
+
+#: .\recipes\plugins\enterprise_plugin\models.py:91
+msgid ""
+"Maximum file storage for space in MB. 0 for unlimited, -1 to disable file "
+"upload."
+msgstr "空间的最大文件存储容量（MB）。0 表示不限制，-1 表示禁用文件上传。"
+
+#: .\recipes\plugins\enterprise_plugin\models.py:95
+msgid "number of credits to set the balance to for new subscriptions."
+msgstr "为新订阅设置余额的积分数量。"
+
+#: .\recipes\plugins\enterprise_plugin\models.py:101
+#: .\recipes\plugins\enterprise_plugin\models.py:147
+msgid ""
+"Discounted price to show, update price_id from Stripe to use, null to "
+"disable discount."
+msgstr "要显示的折扣价格；需在 Stripe 中更新 price_id 后使用；null 表示禁用折扣。"
+
+#: .\recipes\plugins\enterprise_plugin\models.py:103
+#: .\recipes\plugins\enterprise_plugin\models.py:149
+msgid "Text to show as reason for the discount"
+msgstr "作为折扣原因显示的文本"
+
+#: .\recipes\plugins\enterprise_plugin\models.py:246
+msgid "Recipe"
+msgstr "菜谱"
+
+#: .\recipes\plugins\enterprise_plugin\models.py:246
+msgid "Recipe Keyword"
+msgstr "菜谱关键词"
+
+#: .\recipes\plugins\enterprise_plugin\models.py:246
+msgid "Meal Plan"
+msgstr "膳食计划"
+
+#: .\recipes\plugins\enterprise_plugin\models.py:246
+msgid "Shopping"
+msgstr "购物"
+
+#: .\recipes\plugins\enterprise_plugin\models.py:246
+msgid "Book"
+msgstr "食谱书"
+
+#: .\recipes\plugins\enterprise_plugin\models.py:251
+msgid "start"
+msgstr "开始"
+
+#: .\recipes\plugins\enterprise_plugin\models.py:251
+msgid "center"
+msgstr "居中"
+
+#: .\recipes\plugins\enterprise_plugin\models.py:251
+msgid "end"
+msgstr "结束"
+
+#: .\recipes\plugins\enterprise_plugin\templates\enterprise_social_public_view.html:15
+msgid "Tandoor Recipe Manager"
+msgstr "Tandoor 菜谱管理器"
+
+#: .\recipes\settings.py:618 .\recipes\settings.py:641
+msgid "English"
+msgstr "英语"
