@@ -10,21 +10,23 @@
 
 | 方向 | 具体改动 | 关键文件 |
 |---|---|---|
-| 中文化 | 1120 个界面文案全部译为简体中文；默认语言锁定中文，不再跟随浏览器 `Accept-Language` | `vue3/src/locales/zh_Hans.json`、`cookbook/helper/locale_default.py` |
+| 中文化 | 1121 个界面文案全部译为简体中文；默认语言锁定中文，不再跟随浏览器 `Accept-Language` | `vue3/src/locales/zh_Hans.json`、`cookbook/helper/locale_default.py` |
 | 品牌 | 更名「食单 / Dishbook」，登录页、顶栏、页面标题、PWA 名称、邀请邮件统一替换；字标拆成「图标 + 文本」以便换名 | `vue3/src/components/display/BrandWordmark.vue`、`cookbook/theming_tags.py` |
 | 会话策略 | 双规则：页面常开满 3 小时弹窗强制下线；页面关闭后 5 分钟未回来则过期。心跳续期 + 响应头下发剩余时间 | `cookbook/helper/session_limits.py`、`vue3/src/utils/sessionGuard.ts` |
 | 用餐计划 | 日历重做：行高由当天条目数反推（不再溢出到下一周）、条目按餐次配色、空白格给「＋ 添加」占位、工具条改为「‹ 今天 › + 日历」 | `vue3/src/components/display/MealPlanView.vue` |
 | 手机布局 | 小于 960px 不再渲染七列网格，改为按天分组的议程列表 | `vue3/src/components/display/MealPlanAgenda.vue` |
 | 深色模式 | 日历与条目改用 CSS 变量，深色主题下不再出现白色板块 | `MealPlanView.vue` 的 `--mp-*` token |
-| 工程化 | 抽出日历布局纯函数并补 17 个单测；补齐运维脚本；修正 28 条失败用例中的 4 条、其余标注原因 | `vue3/src/utils/mealplanLayout.ts`、`scripts/`、`docs/KNOWN_ISSUES.md` |
-| 文档 | 使用手册（单文件 HTML，可直接打印）、已知问题清单 | `docs/食单使用手册.html`、`docs/KNOWN_ISSUES.md` |
+| 空状态 | 整屏没有安排时浮出「暂无安排 / 点任意日期添加」，不再让人误以为加载失败 | `MealPlanView.vue`、`utils/mealplanLayout.ts` |
+| 顶栏配色 | 由金色改为中性（浅色白底 / 深色 `#212121`），强调色只留在按钮与链接上 | `vue3/src/vuetify.ts`、`apps/tandoor/Tandoor.vue` |
+| 工程化 | 抽出日历布局纯函数并补 22 个单测；补齐运维脚本；修正 28 条失败用例中的 4 条、其余标注原因 | `vue3/src/utils/mealplanLayout.ts`、`scripts/`、`docs/KNOWN_ISSUES.md` |
+| 文档 | 40 篇上游文档译为中文；另附使用手册（单文件 HTML，可直接打印）与已知问题清单 | `docs/`、`mkdocs.yml`、`docs/食单使用手册.html` |
 
 ## 技术栈
 
 - 后端：Python 3.12 · Django 5.2 · Django REST Framework · django-allauth（headless 模式）· django-scopes（多空间隔离）
 - 前端：Vue 3.5 · Vite 8 · Vuetify 3 · Pinia · vue-router · vue-i18n · vue-simple-calendar
 - 数据：SQLite（开发）/ PostgreSQL（生产）· 图片存本地或 S3
-- 测试：pytest（后端 1266 通过）· vitest（前端布局逻辑）
+- 测试：pytest（后端 1266 通过）· vitest（前端布局逻辑 22 条）
 
 ## 本地运行
 

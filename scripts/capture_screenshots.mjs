@@ -133,10 +133,61 @@ async function main() {
     await go('/search?q=', 3200)
     await shot('search.png')
 
+    // ---- an empty period ----
+    // page forward until the visible range holds nothing, so the empty state is
+    // on screen. the calendar has no url for "two weeks from now".
+    await go('/mealplan', 3400)
+    const nextPeriod = `(() => {
+        const btn = [...document.querySelectorAll('.v-btn')].find(b => b.querySelector('.fa-chevron-right'))
+        if (!btn) return false
+        btn.click()
+        return true
+    })()`
+    for (let i = 0; i < 12; i++) {
+        if (await evaluate(`!!document.querySelector('.mp-empty')`)) break
+        if (!await evaluate(nextPeriod)) break
+        await sleep(1600)
+    }
+    if (await evaluate(`!!document.querySelector('.mp-empty')`)) {
+        await shot('mealplan-empty.png')
+    } else {
+        console.warn('no empty period found, skipping mealplan-empty.png')
+    }
+
     // ---- phone ----
     await viewport(390, 844)
     await go('/mealplan', 5000)
     await shot('mealplan-mobile.png')
+
+    // ---- dark ----
+    // flip the real theme through the store instead of adding a class: vuetify
+    // resolves colours when it renders, so a class swap leaves the bar light.
+    const goDark = `(() => {
+        const app = document.querySelector('#app')?.__vue_app__
+        const pinia = app?.config?.globalProperties?.$pinia
+        const store = pinia?._s?.get('user_preference_store')
+        if (!store) return false
+        store.userSettings.theme = 'TANDOOR_DARK'
+        store.updateTheme()
+        return true
+    })()`
+
+    await viewport(1440, 900)
+    await go('/mealplan', 3400)
+    const switched = await evaluate(goDark)
+    // the theme class lands after the next render, so check it separately
+    await sleep(1200)
+    const isDark = await evaluate(`!!document.querySelector('.v-application.v-theme--dark')`)
+
+    if (switched && isDark) {
+        await shot('mealplan-dark.png')
+
+        await viewport(390, 844)
+        await sleep(1400)
+        await shot('mealplan-mobile-dark.png')
+    } else {
+        console.warn('could not switch to the dark theme, skipping the dark shots')
+    }
 
     browser.kill()
     process.exit(0)
