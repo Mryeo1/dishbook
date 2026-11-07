@@ -556,6 +556,7 @@
   "Note": "笔记",
   "NothingHere": "哎呀，这里什么也没有。",
   "NothingPlanned": "暂无安排",
+  "NothingPlannedHint": "点任意日期添加",
   "NullingHelp": "删除选定的{type}后，它将从以下对象中移除。",
   "Number of Objects": "对象数量",
   "Nutrition": "营养",

@@ -520,7 +520,9 @@ class UserPreference(models.Model, PermissionModelMixin):
     image = models.ForeignKey("UserFile", on_delete=models.SET_NULL, null=True, blank=True, related_name='user_image')
 
     theme = models.CharField(choices=THEMES, max_length=128, default=TANDOOR)
-    nav_bg_color = models.CharField(max_length=8, default='#ddbf86')
+    # left empty on purpose so the bar follows the theme; a hardcoded default
+    # here meant every fresh install shipped a gold bar nobody asked for.
+    nav_bg_color = models.CharField(max_length=8, default='', blank=True)
     nav_text_color = models.CharField(max_length=16, choices=NAV_TEXT_COLORS, default=DARK)
     nav_show_logo = models.BooleanField(default=True)
     nav_sticky = models.BooleanField(default=STICKY_NAV_PREF_DEFAULT)

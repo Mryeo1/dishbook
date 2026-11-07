@@ -2,6 +2,7 @@
     <v-row class="mp-row h-100">
         <v-col class="pb-0">
             <v-card ref="shellRef" class="mp-shell pa-0" :style="{height: shellHeight + 'px'}"
+                    :class="{'mp-shell--empty': mdAndUp && !useMealPlanStore().loading && !hasVisibleEntries}"
                     :loading="useMealPlanStore().loading">
                 <!-- phones get an agenda: seven columns at 390px cannot hold a title -->
                 <meal-plan-agenda
@@ -58,6 +59,17 @@
                         </div>
                     </template>
                 </calendar-view>
+                <!--
+                    an empty week and a request still in flight look identical in
+                    the grid, which reads as a broken page when paging back. say
+                    so instead, but only when nothing is actually in view so the
+                    hint never covers days that do hold plans.
+                -->
+                <div class="mp-empty" v-if="mdAndUp && !useMealPlanStore().loading && !hasVisibleEntries">
+                    <i class="far fa-calendar"></i>
+                    <p>{{ $t('NothingPlanned') }}</p>
+                    <span>{{ $t('NothingPlannedHint') }}</span>
+                </div>
             </v-card>
 
             <model-edit-dialog model="MealPlan" v-model="newPlanDialog" :itemDefaults="newPlanDialogDefaultItem" :close-after-create="false"
@@ -88,6 +100,7 @@ import {
     calendarVars as calendarVarsOf,
     computeMetrics,
     countEntriesPerDay,
+    hasEntriesInRange,
     rowBudget as rowBudgetOf,
     slotsPerRow as slotsPerRowOf,
     visibleRange as visibleRangeOf,
@@ -193,6 +206,9 @@ function hasEntries(day: Date | string): boolean {
     const key = typeof day === 'string' ? day : DateTime.fromJSDate(day).toISODate()
     return (entriesPerDay.value.get(key as string) ?? 0) > 0
 }
+
+/** true while the visible period holds at least one plan */
+const hasVisibleEntries = computed(() => hasEntriesInRange(visibleRange.value, entriesPerDay.value))
 
 watch(calendarDate, () => {
     refreshVisiblePeriod(false)
@@ -348,10 +364,64 @@ function dropCalendarItemOnDate(undefinedItem: IMealPlanNormalizedCalendarItem, 
 }
 
 .mp-shell {
+    position: relative;
     border-radius: 14px !important;
     border: 1px solid var(--mp-line-soft);
     overflow: hidden;
     background: var(--mp-surface);
+}
+
+/* ---------- empty period ---------- */
+
+/*
+ * floats over the grid rather than filling it: the days underneath keep their
+ * hover state and stay clickable, and a card reads as an annotation instead of a
+ * replacement for the calendar. opaque on purpose, a translucent one let the
+ * per-day add hints bleed through the text.
+ */
+.mp-empty {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 24px 36px;
+    border-radius: 14px;
+    border: 1px solid var(--mp-line-soft);
+    background: var(--mp-surface);
+    box-shadow: 0 12px 32px color-mix(in srgb, var(--mp-shadow) 14%, transparent);
+    text-align: center;
+    pointer-events: none;
+}
+
+/*
+ * twenty one identical "+ add" hints on an empty month say nothing the card
+ * does not already say, and they compete with it for attention.
+ */
+.mp-shell--empty .mp-day-add {
+    display: none;
+}
+
+.mp-empty i {
+    font-size: 1.35rem;
+    color: var(--mp-text-faint);
+    margin-bottom: 6px;
+}
+
+.mp-empty p {
+    margin: 0;
+    font-size: .95rem;
+    font-weight: 500;
+    color: var(--mp-text-soft);
+    letter-spacing: .02em;
+}
+
+.mp-empty span {
+    font-size: .78rem;
+    color: var(--mp-text-faint);
 }
 
 .mp-cal.cv-wrapper {
@@ -535,6 +605,27 @@ function dropCalendarItemOnDate(undefinedItem: IMealPlanNormalizedCalendarItem, 
     flex: 0 0 28px;
     position: relative;
     z-index: 2;
+}
+
+/*
+ * on the first of a month the calendar prefixes the number with the month name.
+ * the number is pinned to a 28px column so the days line up, which squeezed that
+ * label into one character per line and, with the shipped styling, dropped a
+ * pink block into the grid. let that one cell size itself instead.
+ */
+.mp-cal .cv-day.d01 .cv-day-number {
+    flex: 0 0 auto;
+    width: auto;
+    padding-right: 10px;
+    white-space: nowrap;
+    background: transparent;
+}
+
+.mp-cal .cv-fom-name {
+    font-size: .86em;
+    font-weight: 500;
+    opacity: .7;
+    margin-right: 2px;
 }
 
 .mp-cal .cv-day.today .cv-day-number {

@@ -116,6 +116,20 @@ export function slotsPerRow(range: DateRange, perDay: Map<string, number>): numb
     return Math.min(Math.max(busiestDay(range, perDay), MIN_SLOTS), MAX_SLOTS)
 }
 
+/**
+ * Whether any day in `range` holds an entry.
+ *
+ * The calendar itself renders an empty grid whether a week has no plans or the
+ * request is still in flight, which reads as a broken page when paging back
+ * through history. This lets the view tell the two apart and say so.
+ */
+export function hasEntriesInRange(range: DateRange, perDay: Map<string, number>): boolean {
+    for (let day = range.start, guard = 0; day.toMillis() <= range.end.toMillis() && guard < 400; day = day.plus({days: 1}), guard++) {
+        if ((perDay.get(day.toISODate() as string) ?? 0) > 0) return true
+    }
+    return false
+}
+
 /** height a single week row may take, given the space the card actually has */
 export function rowBudget(shellHeight: number, weeks: number, chrome: number = CALENDAR_CHROME): number {
     return Math.max(shellHeight - chrome, 180) / Math.max(weeks, 1)

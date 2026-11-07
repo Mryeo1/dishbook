@@ -5,6 +5,7 @@ import {
     calendarVars,
     computeMetrics,
     countEntriesPerDay,
+    hasEntriesInRange,
     MAX_SLOTS,
     MIN_SLOTS,
     rowBudget,
@@ -149,5 +150,41 @@ describe('calendarVars', () => {
         expect(vars['--mp-pitch']).toMatch(/^\d+px$/)
         expect(vars['--mp-item-h']).toMatch(/^\d+px$/)
         expect(parseInt(vars['--mp-row-h'])).toBe(rowHeight(computeMetrics({rowBudget: 200, slots: 3, detailed: true})))
+    })
+})
+
+describe('hasEntriesInRange', () => {
+    const week = visibleRange(at('2026-11-07'), 'week', 1, 1)
+    // 2026-11-02 .. 2026-11-08
+
+    it('is false for an empty week so the view can say so instead of showing a blank grid', () => {
+        expect(hasEntriesInRange(week, new Map())).toBe(false)
+    })
+
+    it('ignores entries that fall outside the visible range', () => {
+        const outside = countEntriesPerDay([
+            {fromDate: at('2026-11-20'), toDate: at('2026-11-21')},
+        ])
+        expect(hasEntriesInRange(week, outside)).toBe(false)
+    })
+
+    it('is true as soon as one day inside the range holds an entry', () => {
+        const inside = countEntriesPerDay([{fromDate: at('2026-11-04')}])
+        expect(hasEntriesInRange(week, inside)).toBe(true)
+    })
+
+    it('counts the first and the last visible day', () => {
+        const edges = countEntriesPerDay([
+            {fromDate: at('2026-11-02')},
+            {fromDate: at('2026-11-08')},
+        ])
+        expect(hasEntriesInRange(week, edges)).toBe(true)
+    })
+
+    it('sees an entry that started before the range but runs into it', () => {
+        const spanning = countEntriesPerDay([
+            {fromDate: at('2026-10-30'), toDate: at('2026-11-03')},
+        ])
+        expect(hasEntriesInRange(week, spanning)).toBe(true)
     })
 })

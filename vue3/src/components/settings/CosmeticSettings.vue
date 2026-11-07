@@ -6,7 +6,7 @@
         <language-select></language-select>
 
         <v-label>{{$t('Nav_Color')}}</v-label>
-        <v-color-picker v-model="useUserPreferenceStore().userSettings.navBgColor" mode="hex" :modes="['hex']" show-swatches :swatches="[['#ddbf86'],['#b98766'],['#b55e4f'],['#82aa8b'],['#385f84']]"></v-color-picker>
+        <v-color-picker v-model="useUserPreferenceStore().userSettings.navBgColor" mode="hex" :modes="['hex']" show-swatches :swatches="[['#ffffff'],['#e8e2db'],['#6b6259'],['#332c26'],['#b98766']]"></v-color-picker>
 
         <v-select :label="$t('Theme')" class="mt-4" v-model="useUserPreferenceStore().userSettings.theme" :items="[{title: $t('AppName') + ' 浅色', value: 'TANDOOR'}, {title: $t('AppName') + ' 深色', value: 'TANDOOR_DARK'}, ]">
         </v-select>

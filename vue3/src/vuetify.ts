@@ -50,7 +50,11 @@ export default createVuetify({
             light: {
                 colors: {
                     background: '#f5efea',
-                    tandoor: '#ddbf86',
+                    // the bar sits on a warm page, so a plain white one reads as
+                    // a separate surface without competing with the content. the
+                    // accent stays on `primary`, not on every chrome element.
+                    tandoor: '#ffffff',
+                    'on-tandoor': '#332c26',
                     primary: '#b98766',
                     secondary: '#b55e4f',
                     success: '#82aa8b',
@@ -69,7 +73,10 @@ export default createVuetify({
             },
             dark: {
                 colors: {
-                    tandoor: '#ddbf86',
+                    // matches the dark surface so the login bar and the app bar
+                    // do not sit a shade apart
+                    tandoor: '#212121',
+                    'on-tandoor': '#eae6e1',
                     primary: '#b98766',
                     secondary: '#b55e4f',
                     success: '#82aa8b',

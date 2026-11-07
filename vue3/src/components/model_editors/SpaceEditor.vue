@@ -37,7 +37,7 @@
                 <v-tabs-window-item value="cosmetic">
                     <v-label class="mt-4">{{ $t('Nav_Color') }}</v-label>
                     <v-color-picker v-model="editingObj.navBgColor" class="mb-4" mode="hex" :modes="['hex']" show-swatches
-                                    :swatches="[['#ddbf86'],['#b98766'],['#b55e4f'],['#82aa8b'],['#385f84']]"></v-color-picker>
+                                    :swatches="[['#ffffff'],['#e8e2db'],['#6b6259'],['#332c26'],['#b98766']]"></v-color-picker>
                     <v-btn class="mb-4" @click="editingObj.navBgColor = ''">{{ $t('Reset') }}</v-btn>
 
                     <user-file-field v-model="editingObj.navLogo" :label="$t('Logo')" :hint="$t('CustomNavLogoHelp')" persistent-hint></user-file-field>

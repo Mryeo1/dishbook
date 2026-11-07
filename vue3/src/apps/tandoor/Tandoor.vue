@@ -1,11 +1,12 @@
 <template>
     <v-app>
-        <v-app-bar color="tandoor" flat density="comfortable" v-if="!useUserPreferenceStore().isAuthenticated && !useUserPreferenceStore().isPrintMode && !isBarePage">
+        <v-app-bar color="tandoor" class="app-bar-main" flat density="comfortable" v-if="!useUserPreferenceStore().isAuthenticated && !useUserPreferenceStore().isPrintMode && !isBarePage">
             <a href="/" class="ps-2 pe-2 ms-1">
                 <brand-wordmark></brand-wordmark>
             </a>
         </v-app-bar>
         <v-app-bar :color="useUserPreferenceStore().activeSpace.navBgColor ? useUserPreferenceStore().activeSpace.navBgColor : useUserPreferenceStore().userSettings.navBgColor"
+                   class="app-bar-main"
                    flat density="comfortable" v-if="useUserPreferenceStore().isAuthenticated && !useUserPreferenceStore().isPrintMode"
                    :absolute="!useUserPreferenceStore().userSettings.navSticky"
                    :scroll-behavior="useUserPreferenceStore().userSettings.navSticky ? 'elevate' : ''">
@@ -233,6 +234,29 @@ function logout() {
 
 <style>
 
+/*
+ * a light bar on a warm page needs an edge to read as chrome; without it the
+ * bar and the content blur into one surface. kept as a border rather than a
+ * shadow so it survives the sticky/scroll elevate.
+ */
+.app-bar-main {
+    border-bottom: 1px solid rgba(0, 0, 0, .07) !important;
+}
+
+.v-theme--dark .app-bar-main {
+    border-bottom-color: rgba(255, 255, 255, .09) !important;
+}
+
+/*
+ * the bar used to be gold, so an accent coloured wordmark read fine on it.
+ * against a neutral bar it looks like a link, so the name follows the surface
+ * instead. on-surface flips with the theme, which keeps it readable whether the
+ * bar is white, near black, or a colour the user picked.
+ */
+.app-bar-main .brand-wordmark__name {
+    color: rgba(var(--v-theme-on-surface), 1) !important;
+}
+
 .v-theme--dark {
 
     a:not([class]) {
@@ -280,10 +304,6 @@ function logout() {
 
     .cv-item {
         background-color: #4E4E4E !important;
-    }
-
-    .d01 .cv-day-number {
-        background-color: #b98766 !important;
     }
 
     /* mavon-editor link/image dialog */

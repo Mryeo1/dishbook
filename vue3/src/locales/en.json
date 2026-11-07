@@ -556,6 +556,7 @@
   "Note": "Note",
   "NothingHere": "Oops, there is nothing here.",
   "NothingPlanned": "Nothing planned yet",
+  "NothingPlannedHint": "Click any day to add one",
   "NullingHelp": "The selected {type} will be removed from the following objects when it is deleted.",
   "Number of Objects": "Number of Objects",
   "Nutrition": "Nutrition",
