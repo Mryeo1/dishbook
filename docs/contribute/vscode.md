@@ -1,58 +1,58 @@
-Configurations for debugging django, volar, testing, linting and formatting are all include in the project files.
+调试 django、volar、测试、代码检查和格式化的配置都包含在项目文件中。
 
-## Extensions
+## 扩展
 
-VSCode can be configured to format and lint on save instead of manually formatting files before submitting a pull request.
-To enable auto-formatting and linting install the following extensions in VSCode:
+可以将 VSCode 配置为在保存时进行格式化和代码检查，而不必在提交 PR 之前手动格式化文件。
+要启用自动格式化和代码检查，请在 VSCode 中安装以下扩展：
 
-Name: Flake8
-Publisher: Microsoft
-VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=ms-python.flake8
+名称：Flake8
+发布者：Microsoft
+VS Marketplace 链接：https://marketplace.visualstudio.com/items?itemName=ms-python.flake8
 
-Name: yapf
-Publisher: EeyoreLee
-VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=eeyore.yapf
+名称：yapf
+发布者：EeyoreLee
+VS Marketplace 链接：https://marketplace.visualstudio.com/items?itemName=eeyore.yapf
 
-Name: isort
-Publisher: Microsoft
-VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=ms-python.isort
+名称：isort
+发布者：Microsoft
+VS Marketplace 链接：https://marketplace.visualstudio.com/items?itemName=ms-python.isort
 
-Name: Vue - Official
-Publisher: Vue
-VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=Vue.volar
+名称：Vue - Official
+发布者：Vue
+VS Marketplace 链接：https://marketplace.visualstudio.com/items?itemName=Vue.volar
 
-Name: Prettier - Code formatter
-Publisher: Prettier
-VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
+名称：Prettier - Code formatter
+发布者：Prettier
+VS Marketplace 链接：https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
 
 <!-- prettier-ignore -->
 !!! hint
-     Adding a comma at the end of a list will trigger yapf to put each element of the list on a new line
+    在列表末尾添加一个逗号会触发 yapf 将列表的每个元素放到新的一行
 
-## VSCode Tasks
+## VSCode 任务
 
 <!-- prettier-ignore -->
 !!! note
-     In order to hot reload vue, the `yarn dev` server must be started before starting the django server.
+    为了热重载 vue，必须在启动 django 服务器之前启动 `yarn dev` 服务器。
 
-There are a number of built in tasks that are available. Here are a few of the key ones:
+有许多内置任务可供使用。以下是一些关键任务：
 
-- `Setup Dev Server` - Runs all the prerequisite steps so that the dev server can be run inside VSCode.
-- `Setup Tests` - Runs all prerequisites so tests can be run inside VSCode.
+- `Setup Dev Server` - 运行所有前置步骤，以便能在 VSCode 内运行开发服务器。
+- `Setup Tests` - 运行所有前置步骤，以便能在 VSCode 内运行测试。
 
-Once these are run, there are 2 options.  If you want to run a vue3 server in a hot reload mode for quick development of the frontend, you should run a development vue server:
+运行这些任务后，有两种选择。如果你想以热重载模式运行 vue3 服务器以便快速开发前端，应当运行开发用 vue 服务器：
 
-- `Yarn Dev` - Runs development Vue.js vite server not connected to VSCode. Useful if you want to make Vue changes and see them in realtime.
+- `Yarn Dev` - 运行未连接到 VSCode 的开发用 Vue.js vite 服务器。如果你想修改 Vue 并实时查看效果，这会很有用。
 
-If not, you need to build and copy the frontend to the django server.  If you make changes to the frontend, you need to re-run this and restart the django server:
+如果不需要，你需要构建前端并将其复制到 django 服务器上。如果你更改了前端，需要重新运行此任务并重启 django 服务器：
 
-- `Collect Static Files` - Builds and collects the vue3 frontend so that it can be served via the django server.
+- `Collect Static Files` - 构建并收集 vue3 前端，以便能通过 django 服务器提供。
 
-Once either of those steps are done, you can start the django server:
+完成上述任一步骤后，你就可以启动 django 服务器：
 
-- `Run Dev Server` - Runs a django development server not connected to VSCode.
+- `Run Dev Server` - 运行未连接到 VSCode 的 django 开发服务器。
 
-There are also a few other tasks specified in case you have specific development needs:
+此外还指定了其他几个任务，以备你有特定的开发需求：
 
-- `Run all pytests` - Runs all the pytests outside of VSCode.
-- `Serve Documentation` - Runs a documentation server. Useful if you want to see how changes to documentation show up.
+- `Run all pytests` - 在 VSCode 之外运行所有 pytest 测试。
+- `Serve Documentation` - 运行文档服务器。如果你想查看文档更改的显示效果，这会很有用。

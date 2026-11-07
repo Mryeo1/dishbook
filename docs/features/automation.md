@@ -1,101 +1,102 @@
 <!-- prettier-ignore -->
 !!! warning
-     Automations are currently in a beta stage. They work pretty stable but if I encounter any
-     issues while working on them, I might change how they work breaking existing automations.
-     I will try to avoid this and am pretty confident it won't happen.
+     自动计划目前处于测试阶段。它们运行得相当稳定，但如果在处理它们时遇到任何
+     问题，我可能会改变其工作方式，从而破坏已有的自动计划。
+     我会尽量避免这种情况，并且相当有信心不会发生。
 
-Automations allow Tandoor to automatically perform certain tasks, especially when importing recipes, that
-would otherwise have to be done manually. Currently, the following automations are supported.
+自动计划允许 Tandoor 自动执行某些任务，尤其是在导入菜谱时，这些任务
+原本需要手动完成。目前支持以下自动计划。
 
-## Unit, Food, Keyword Alias
+## 单位、食物、关键词别名
 
-Foods, Units and Keywords can have automations that automatically replace them with another object
-to allow aliasing them.
+食物、单位和关键词可以有自动计划，自动将它们替换为另一个对象，
+以实现别名。
 
-This helps to add consistency to the naming of objects, for example to always use the singular form
-for the main name if a plural form is configured.
+这有助于让对象命名保持一致，例如在配置了复数形式的情况下，
+始终将主名称使用单数形式。
 
-These automations are best created by dragging and dropping Foods, Units or Keywords in their respective
-views and creating the automation there.
+这些自动计划最好通过在各视图中拖放食物、单位或关键词，
+并在那里创建自动计划。
 
-You can also create them manually by setting the following
+你也可以通过设置以下内容手动创建它们
 
--   **Parameter 1**: name of food/unit/keyword to match
--   **Parameter 2**: name of food/unit/keyword to replace matched food with
+-   **参数 1**：要匹配的食物／单位／关键词名称
+-   **参数 2**：用于替换匹配食物的食物／单位／关键词名称
 
-These rules are processed whenever you are importing recipes from websites or other apps
-and when using the simple ingredient input (shopping, recipe editor, ...).
+这些规则会在你从网站或其他应用导入菜谱时处理，
+也会在使用简易食材输入（购物、菜谱编辑器……）时处理。
 
-## Description Replace
+## 描述替换
 
-This automation is a bit more complicated than the alias rules. It is run when importing a recipe
-from a website.
+此自动计划比别名规则稍复杂一些。它在从网站
+导入菜谱时运行。
 
-It uses Regular Expressions (RegEx) to determine if a description should be altered, what exactly to remove
-and what to replace it with.  The search string ignores case, the replacement string respects case.
+它使用正则表达式（RegEx）判断描述是否需要修改、具体要移除什么
+以及用什么替换。搜索字符串忽略大小写，替换字符串区分大小写。
 
--   **Parameter 1**: pattern of which sites to match (e.g. `.*.chefkoch.de.*`, `.*`)
--   **Parameter 2**: pattern of what to replace (e.g. `.*`)
--   **Parameter 3**: value to replace matched occurrence of parameter 2 with. Only the first occurrence of the pattern is replaced.
+-   **参数 1**：要匹配哪些站点的模式（例如 `.*.chefkoch.de.*`、`.*`）
+-   **参数 2**：要替换内容的模式（例如 `.*`）
+-   **参数 3**：用于替换参数 2 匹配项的取值。只会替换模式的第一个匹配项。
 
-To replace the description the python [re.sub](https://docs.python.org/2/library/re.html#re.sub) function is used
-like this `re.sub(<parameter 2>, <parameter 3>, <description>, count=1)`
+替换描述时使用 Python 的 [re.sub](https://docs.python.org/2/library/re.html#re.sub) 函数，
+如下所示 `re.sub(<parameter 2>, <parameter 3>, <description>, count=1)`
 
-To test out your patterns and learn about RegEx you can use [regexr.com](https://regexr.com/)
-ChatGPT and similiar LLMs are also useful for creating RegEx patterns:
+要测试你的模式并学习 RegEx，可以使用 [regexr.com](https://regexr.com/)
+ChatGPT 及类似的 LLM 对于创建 RegEx 模式也很有用：
 `ChatGPT please create a Regex expression in the format of re.sub(<parameter 2>, <parameter 3>, <description>, count=1)
 that will change the string <example string here> into the string <desired result here>`
 
 <!-- prettier-ignore -->
 !!! info
-    In order to prevent denial of service attacks on the RegEx engine the number of replace automations
-    and the length of the inputs that are processed are limited. Those limits should never be reached
-    during normal usage.
+    为防止针对 RegEx 引擎的拒绝服务攻击，替换自动计划的数量
+    以及所处理输入的长度都受到限制。这些限制在正常使用中
+    绝不应被触达。
 
-## Instruction Replace, Title Replace, Food Replace & Unit Replace
+## 步骤说明替换、标题替换、食物替换与单位替换
 
-These work just like the Description Replace automation.
-Instruction, Food and Unit Replace will run against every iteration of the object in a recipe during import.
-- Instruction Replace will run for the instructions in every step.  It will also replace every occurrence, not just the first.
-- Food & Unit Replace will run for every food and unit in every ingredient in every step.
+这些的工作方式与描述替换自动计划完全相同。
+步骤说明、食物和单位替换会在导入期间对菜谱中该对象的每次迭代运行。
+- 步骤说明替换会针对每个步骤中的说明运行。它还会替换每次出现，而不只是第一个。
+- 食物与单位替换会针对每个步骤中每种食材的每个食物和单位运行。
 
-Also instead of just replacing a single occurrence of the matched pattern it will replace all.
+此外，它不只是替换匹配模式的单个出现，而是全部替换。
 
-## Never Unit
+## 永不作为单位
 
-Some ingredients have a pattern of AMOUNT and FOOD, if the food has multiple words (e.g. egg yolk) this can cause Tandoor
-to detect the word "egg" as a unit. This automation will detect the word 'egg' as something that should never be considered
-a unit.
+有些食材遵循「数量 + 食物」的模式，如果食物包含多个单词（例如 egg yolk），这可能导致 Tandoor
+将「egg」一词识别为单位。此自动计划会将「egg」一词识别为绝不应被视为
+单位的内容。
 
-You can also create them manually by setting the following
+你也可以通过设置以下内容手动创建它们
 
--   **Parameter 1**: string to detect
--   **Parameter 2**: Optional: unit to insert into ingredient (e.g. 1 whole 'egg yolk' instead of 1 <empty> 'egg yolk')
+-   **参数 1**：要检测的字符串
+-   **参数 2**：可选：要插入食材的单位（例如 1 whole『egg yolk』而不是 1 <empty>『egg yolk』）
 
-These rules are processed whenever you are importing recipes from websites or other apps
-and when using the simple ingredient input (shopping, recipe editor, ...).
+这些规则会在你从网站或其他应用导入菜谱时处理，
+也会在使用简易食材输入（购物、菜谱编辑器……）时处理。
 
-## Transpose Words
+## 调换词序
 
-Some recipes list the food before the units for some foods (garlic cloves). This automation will transpose 2 words in an
-ingredient so "garlic cloves" will automatically become "cloves garlic"
+有些菜谱会为某些食物（大蒜瓣）将食物列在单位之前。此自动计划会调换食材中的 2 个词，
+因此「garlic cloves」会自动变成「cloves garlic」
 
--   **Parameter 1**: first word to detect
--   **Parameter 2**: second word to detect
+-   **参数 1**：要检测的第一个词
+-   **参数 2**：要检测的第二个词
 
-These rules are processed whenever you are importing recipes from websites or other apps
-and when using the simple ingredient input (shopping, recipe editor, ...).
+这些规则会在你从网站或其他应用导入菜谱时处理，
+也会在使用简易食材输入（购物、菜谱编辑器……）时处理。
 
-# Order
+# 顺序
 
-If the Automation type allows for more than one rule to be executed (for example description replace)
-the rules are processed in ascending order (ordered by the _order_ property of the automation).
-The default order is always 1000 to make it easier to add automations before and after other automations.
+如果自动计划类型允许多条规则被执行（例如描述替换），
+规则会按升序处理（按自动计划的 _order_ 属性排序）。
+默认顺序始终为 1000，以便更容易地在其他自动计划前后添加自动计划。
 
-Example:
+示例：
 
-1. Rule ABC (order 1000) replaces `everything` with `abc`
-2. Rule DEF (order 2000) replaces `everything` with `def`
-3. Rule XYZ (order 500) replaces `everything` with `xyz`
+1. 规则 ABC（顺序 1000）将 `everything` 替换为 `abc`
+2. 规则 DEF（顺序 2000）将 `everything` 替换为 `def`
+3. 规则 XYZ（顺序 500）将 `everything` 替换为 `xyz`
 
-After processing rules XYZ, then ABC and then DEF the description will have the value `def`
+按 XYZ、ABC、DEF 的顺序处理后，描述的值将为 `def`
+

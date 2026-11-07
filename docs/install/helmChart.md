@@ -1,16 +1,16 @@
-!!! info "Community Contributed"
-    This guide was contributed by the community and is neither officially supported, nor updated or tested.
+!!! info "社区贡献"
+    本指南由社区贡献，既不受官方支持，也不保证更新或测试。
 
-## Helm Install Setup
+## Helm 安装设置
 
-Assumptions:
+前提条件：
 
-1. You have a running postgres database you can access.
-2. The initial version of this chart does not include a LB. It assume you will point to the service that will be create by using either an Ingress manifest or a httproute.
+1. 你有一个可访问且正在运行的 postgres 数据库。
+2. 该 Chart 的初始版本不包含负载均衡器（LB）。它假定你将通过 Ingress 清单或 httproute 指向将要创建的服务。
 
-Example config values.yaml. Please see helm-chart repo for the last [version](https://github.com/csg33k/helm-charts/blob/main/charts/tandoor/values.yaml).
+示例配置 values.yaml。请查看 helm-chart 仓库以获取最新[版本](https://github.com/csg33k/helm-charts/blob/main/charts/tandoor/values.yaml)。
 
-Basic minimal example:
+基本最小示例：
 
 **values.yaml**
 ```yaml
@@ -81,13 +81,13 @@ extraResources:
       username: db_username
 ```
 
-Install the chart:
+安装 Chart：
 
 ```sh
 helm install recipe-manager -n food oci://ghcr.io/csg33k/helm-charts/tandoor --version 0.0.1 -f myvalues.yaml 
 ```
 
-Once that is complete all you need is to setup your Ingress / httproute. Everyone does this differently but if you have an Gateway already setup setting up a route is as easy as:
+完成之后，你只需设置 Ingress / httproute。每个人的做法不同，但如果你已经设置好 Gateway，设置路由就和下面一样简单：
 
 ```yaml
 apiVersion: gateway.networking.k8s.io/v1
@@ -108,5 +108,5 @@ spec:
           port: 80
 ```
 
-That's it! Happy cooking!
+就这样！烹饪愉快！
 ~~~

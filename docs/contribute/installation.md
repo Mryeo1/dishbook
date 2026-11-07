@@ -1,54 +1,54 @@
-!!! info "Development Setup"
-    The dev setup is a little messy as this application combines the best (at least in my opinion) of both Django and Vue.js.
+!!! info "开发环境搭建"
+    开发环境的搭建有些杂乱，因为这个应用结合了 Django 和 Vue.js 两者（至少在我看来）最好的部分。
 
-### Devcontainer Setup
+### Devcontainer 搭建
 
-There is a [devcontainer](https://containers.dev) set up to ease development. It is optimized for VSCode, but should be able to
-be used by other editors as well. Once the container is running, you can do things like start a Django dev server, start a Vue.js
-dev server, run python tests, etc. by either using the VSCode tasks below, or manually running commands described in the individual
-technology sections below.
+我们配置了一个 [devcontainer](https://containers.dev) 来简化开发。它针对 VSCode 做了优化，但也应该可以
+供其他编辑器使用。容器运行后，你可以做诸如启动 Django 开发服务器、启动 Vue.js
+开发服务器、运行 python 测试等事情，方式可以是使用下面的 VSCode 任务，或手动运行各个
+技术小节中描述的命令。
 
-In VSCode, simply check out the git repository, and then via the command palette, choose `Dev Containers: Reopen in container`.
+在 VSCode 中，只需检出该 git 仓库，然后通过命令面板选择 `Dev Containers: Reopen in container`。
 
-If you need to change python dependencies (requierments.txt) or OS packages, you will need to rebuild the container. If you are
-changing OS package requirements, you will need to update both the main `Dockerfile` and the `.devcontainer/Dockerfile`.
+如果你需要更改 python 依赖（requierments.txt）或操作系统软件包，则需要重新构建容器。如果你
+更改操作系统软件包要求，则需要同时更新主 `Dockerfile` 和 `.devcontainer/Dockerfile`。
 
 ### Django
 
-This application is developed using the Django framework for Python. They have excellent
-[documentation](https://www.djangoproject.com/start/) on how to get started, so I will only give you the basics here.
+本应用使用 Python 的 Django 框架开发。他们提供了非常出色的
+入门[文档](https://www.djangoproject.com/start/)，所以我这里只介绍基础知识。
 
-1. Clone this repository wherever you like and install the Python language for your OS (I recommend using version 3.10 or above).
-2. Open it in your favorite editor/IDE (e.g. PyCharm).
-   a. If you want, create a virtual environment for all your packages.
-3. Install all required packages: `pip install -r requirements.txt`.
-4. Run the migrations: `python manage.py migrate`.
-5. Start the development server: `python manage.py runserver`.
+1. 将本仓库克隆到任意位置，并为你的操作系统安装 Python 语言（我推荐使用 3.10 或更高版本）。
+2. 在你喜欢的编辑器/IDE（例如 PyCharm）中打开它。
+   a. 如果需要，为所有软件包创建一个虚拟环境。
+3. 安装所有必需的软件包：`pip install -r requirements.txt`。
+4. 运行迁移：`python manage.py migrate`。
+5. 启动开发服务器：`python manage.py runserver`。
 
-There is **no** need to set any environment variables. By default, a simple SQLite database is used and all settings are
-populated from default values.
+**无需**设置任何环境变量。默认情况下会使用一个简单的 SQLite 数据库，所有设置都由
+默认值填充。
 
 ### Vue.js
 
-!!! danger "Development Setup"
-    The vite dev server **must** be started before the django runserver command is run or else django will **not** recognize it and try to fallback to the build files. 
+!!! danger "开发环境搭建"
+    **必须**在运行 django runserver 命令之前启动 vite 开发服务器，否则 django 将**不会**识别它，并会尝试回退到构建文件。
 
-The frontend is build using [Vue.js](https://vuejs.org/).
+前端使用 [Vue.js](https://vuejs.org/) 构建。
 
-In order to work on these pages, you will have to install a Javascript package manager of your choice. The following examples use yarn.
+为了在这些页面上进行开发，你需要安装一个自选的 Javascript 包管理器。以下示例使用 yarn。
 
-1. go to the `vue3` and run `yarn install` to install the dependencies  
-2. run `yarn serve` to start the dev server that allows hot reloading and easy and quick development
+1. 进入 `vue3` 并运行 `yarn install` 以安装依赖  
+2. 运行 `yarn serve` 启动开发服务器，它支持热重载，便于快速轻松地开发
 
-If you do not wish to work on those pages, but instead want the application to work properly during development, run `yarn build` to build the frontend pages once. After that you 
-might need to run `python manage.py collectstatic` to setup the static files.
+如果你不想在这些页面上进行开发，而是希望应用在开发期间正常运行，请运行一次 `yarn build` 来构建前端页面。之后你
+可能需要运行 `python manage.py collectstatic` 来设置静态文件。
 
 
-### Building Docker Image from Source
-Similar to the Vue.js procedure, if you wish to build a docker image from source run you must build the vue3 files first.
+### 从源码构建 Docker 镜像
+与 Vue.js 的流程类似，如果你想从源码构建 docker 镜像，必须先构建 vue3 文件。
 
-1. in your project files navigate to `vue3` and run `yarn install` to install the dependencies
-2. run `yarn build` to build the static files for django to use.
-3. navigate back to the root directory and run `docker build -t ${tag}:${version} .`
+1. 在你的项目文件中进入 `vue3` 并运行 `yarn install` 以安装依赖
+2. 运行 `yarn build` 构建供 django 使用的静态文件。
+3. 返回根目录并运行 `docker build -t ${tag}:${version} .`
 
-Django's `collectstatic` command is not necessary in this instance as the `Dockerfile`'s entrypoint will collect the static files upon startup on `docker run`. 
+在这种情况下不需要 Django 的 `collectstatic` 命令，因为 `Dockerfile` 的入口点会在 `docker run` 启动时收集静态文件。

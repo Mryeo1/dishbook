@@ -1,34 +1,34 @@
-# Households
+# 家庭组
 
-## What are Households?
+## 什么是家庭组？
 
-Households are a way to group users together within a Space so they can automatically share meal plans and shopping lists with each other, without needing to manually share them one by one.
+家庭组是一种在空间内将用户分组的机制，使组内成员能够自动彼此分享用餐计划和购物清单，而无需逐个手动分享。
 
-For example, if a family of 4 all use the same Tandoor Space, they can be placed in one Household. Everyone in that Household will then see the same shared meal plan and shopping list by default.
+例如，如果一个四口之家都使用同一个 Tandoor 空间，就可以把他们放进同一个家庭组。该家庭组中的所有成员默认就会看到相同的共享用餐计划和购物清单。
 
-## Why use Households?
+## 为什么要使用家庭组？
 
-Before Households existed, if you wanted multiple users to share a meal plan or shopping list, every single user had to manually share their plan with every other user. This became difficult to manage for larger groups (for example, a shared community or many family members).
+在家庭组出现之前，如果想让多个用户共享用餐计划或购物清单，每个用户都必须手动把自己的计划分享给其他每一个人。对于较大的群体（例如共享的社区或众多家庭成员），这会变得难以管理。
 
-Households solve this by letting an admin group users together once, instead of setting up sharing individually for each person.
+家庭组解决了这个问题：管理员只需把用户分组一次，而无需为每个人单独配置分享。
 
-## How to create a Household
+## 如何创建家庭组
 
-1. Log in to your Tandoor instance.
-2. Go to **Settings**.
-3. Look for the **Household** section.
-4. Click **Create Household** and give it a name (for example, "Smith Family" or "Flat 3B").
-5. Add the users who should belong to this Household.
+1. 登录您的 Tandoor 实例。
+2. 前往**设置**。
+3. 找到**家庭组**部分。
+4. 点击**创建家庭组**并为其命名（例如「Smith 一家」或「3B 公寓」）。
+5. 添加应属于该家庭组的用户。
 
-New users are often prompted to set up or join a Household during the initial welcome/setup steps when they first log in.
+新用户首次登录时，通常会在初始的欢迎/设置步骤中被提示创建或加入一个家庭组。
 
-## Managing a Household
+## 管理家庭组
 
-- You can add or remove members from a Household at any time from the Household settings page.
-- A user can typically belong to a Household within their Space to share planning features with the rest of the group.
-- Removing a user from a Household will stop automatic sharing of the meal plan and shopping list with that user.
+- 您可以随时在家庭组设置页面添加或移除成员。
+- 一个用户通常只能属于其空间中的一个家庭组，以便与组内其他成员共享计划功能。
+- 将用户从家庭组中移除后，将停止与其自动分享用餐计划和购物清单。
 
-## Notes
+## 说明
 
-- Households are separate from **Spaces**. A Space is the overall Tandoor instance/workspace, while a Household is a smaller group of users *within* a Space (like a family living together).
-- If you are the only user in your Space, you may not need to configure a Household, though the app may still prompt you to create a default one during setup.
+- 家庭组与**空间**是分开的。空间是 Tandoor 的整体实例/工作区，而家庭组是空间*内部*由用户组成的小群体（比如共同生活的一家人）。
+- 如果您是空间中的唯一用户，可能无需配置家庭组，不过应用在设置过程中仍可能提示您创建一个默认家庭组。

@@ -1,24 +1,23 @@
-!!! info "Community Contributed"
-    This guide was contributed by the community and is neither officially supported, nor updated or tested.
+!!! info "社区贡献"
+    本指南由社区贡献，既不受官方支持，也不保证更新或测试。
 
-!!! danger "Tandoor 2 Compatibility"
-    This guide has not been verified/tested for Tandoor 2, which now integrates a nginx service inside the default docker container and exposes its service on port 80 instead of 8080.
+!!! danger "Tandoor 2 兼容性"
+    本指南尚未针对 Tandoor 2 进行验证/测试，Tandoor 2 现在在默认 Docker 容器内集成了 nginx 服务，并将其服务暴露在 80 端口而非 8080 端口。
 
-[KubeSail](https://kubesail.com/) lets you install Tandoor by providing a simple web interface for installing and managing apps. You can connect any server running Kubernetes, or get a pre-configured [PiBox](https://pibox.io).
+[KubeSail](https://kubesail.com/) 通过提供用于安装和管理应用的简单 Web 界面，让你可以安装 Tandoor。你可以连接任何运行 Kubernetes 的服务器，或获取预配置的 [PiBox](https://pibox.io)。
 
 <!-- A portion of every PiBox sale goes toward supporting Tandoor development. -->
 
-The KubeSail template is closely based on the [Kubernetes installation]([docs/install/k8s](https://github.com/vabene1111/recipes/tree/develop/docs/install/k8s)) configs
+KubeSail 模板在很大程度上基于 [Kubernetes 安装]([docs/install/k8s](https://github.com/vabene1111/recipes/tree/develop/docs/install/k8s))配置
 
-## Quick Start
+## 快速开始
 
-Load the [Tandoor Recipes](https://kubesail.com/template/PastuDan/Tandoor%20Recipes) template, and click **Launch Template**.
+加载 [Tandoor Recipes](https://kubesail.com/template/PastuDan/Tandoor%20Recipes) 模板，然后点击 **Launch Template**。
 
-If you have not yet attached your server to KubeSail, see the [Getting a Cluster](https://docs.kubesail.com/guides/bare-metal/) section on the KubeSail docs.
+如果你尚未将服务器连接到 KubeSail，请参阅 KubeSail 文档中的[获取集群](https://docs.kubesail.com/guides/bare-metal/)部分。
 
-## Important notes
+## 重要说明
 
-In the "Template Variables" section you will see two input fields. These should show `RANDOM(16)`, indicating they will be randomly generated and specific to your install when you launch the template. If you prefer to set these yourself, you can type them in before launching the template.
+在「Template Variables」部分，你会看到两个输入字段。它们应显示 `RANDOM(16)`，表示在启动模板时它们会被随机生成并专门用于你的安装。如果你更愿意自行设置，可以在启动模板前输入。
 
 ![image](https://user-images.githubusercontent.com/1296162/140431276-b823ba1c-175c-436a-9ed9-35bc62f8744e.png)
-

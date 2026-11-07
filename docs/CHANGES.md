@@ -6,7 +6,7 @@
 
 | 内容 | 文件 |
 |---|---|
-| 1120 个界面文案译为简体中文，新增 `AppName`、`Home` 等键 | `vue3/src/locales/zh_Hans.json` |
+| 1121 个界面文案译为简体中文，新增 `AppName`、`Home`、`NothingPlannedHint` 等键 | `vue3/src/locales/zh_Hans.json` |
 | 品牌词在英文包里替换为 Dishbook，并补上被漏掉的基础单位键 | `vue3/src/locales/en.json` |
 | 默认语言改为「先看用户显式选择，再退回 `LANGUAGE_CODE`」，不再跟随 `Accept-Language` | `cookbook/helper/locale_default.py`、`recipes/settings.py` |
 | 帮助文档首页汉化 | `docs/index.md` |
@@ -45,16 +45,18 @@
 | 行高由当天条目数反推，条目不再溢出到下一周 | `vue3/src/components/display/MealPlanView.vue` |
 | 条目拆成「定位壳 + 卡片」，条目间有真实间距 | `components/display/MealPlanCalendarItem.vue` |
 | 空白格显示「＋ 添加」占位；周数改为窄轨 | 同上 |
+| 整屏无安排时浮出「暂无安排 / 点任意日期添加」，并收起逐格的「＋」（21 个一样的提示只会互相打架） | `MealPlanView.vue`、`utils/mealplanLayout.ts` |
+| 修复每月 1 号的月份标签：被挤进 28px 列宽后一字一行，还带着上游的粉色底 | `MealPlanView.vue`、`apps/tandoor/Tandoor.vue` |
 | 工具条改为「‹ 今天 › + 日历图标」 | `components/display/MealPlanCalendarHeader.vue` |
 | 手机端改为按天议程 | `components/display/MealPlanAgenda.vue` |
 | 首页两天窗口 + 「查看整周」弹窗 | `components/display/HorizontalMealPlanWindow.vue` |
 
-## 五、工程化（本轮新增）
+## 五、工程化
 
 | 内容 | 文件 |
 |---|---|
-| 日历几何抽成纯函数：`visibleRange` / `slotsPerRow` / `computeMetrics` / `rowHeight` | `vue3/src/utils/mealplanLayout.ts` |
-| 17 个单测覆盖跨周条目、槽位上下限、行高不溢出、深色紧凑布局 | `vue3/src/utils/__tests__/mealplanLayout.spec.ts` |
+| 日历几何抽成纯函数：`visibleRange` / `slotsPerRow` / `computeMetrics` / `rowHeight` / `hasEntriesInRange` | `vue3/src/utils/mealplanLayout.ts` |
+| 22 个单测覆盖跨周条目、槽位上下限、行高不溢出、深色紧凑布局、空区间判定 | `vue3/src/utils/__tests__/mealplanLayout.spec.ts` |
 | `npm run test` / `test:watch` | `vue3/package.json` |
 | 深色模式 token 化（`--mp-*`，浅色 + 深色两套） | `MealPlanView.vue`、`MealPlanCalendarItem.vue`、`MealPlanCalendarHeader.vue` |
 | 修复 `GET /setup/` 500（headless 模式下 `reverse('account_login')` 不存在） | `cookbook/views/views.py`、`recipes/settings.py` |
@@ -64,7 +66,32 @@
 | 构建/同步/灌数据/截图/校验脚本从临时目录迁到 `scripts/` | `scripts/` |
 | 修复同步脚本：刷新被 `ManifestStaticFilesStorage` 冻结的 `manifest.<hash>.json` | `scripts/sync_static.py` |
 
-## 六、文档
+## 六、顶栏配色
+
+| 内容 | 文件 |
+|---|---|
+| 顶栏由金色改为中性：浅色白底、深色 `#212121`，强调色只保留在 `primary`（按钮、链接） | `vue3/src/vuetify.ts` |
+| 品牌名跟随顶栏表面色，不再用强调色——白底上的棕金色看着像链接 | `apps/tandoor/Tandoor.vue` |
+| 顶栏底部加 1px 分隔线，浅色 `rgba(0,0,0,.07)` / 深色 `rgba(255,255,255,.09)` | 同上 |
+| `UserPreference.nav_bg_color` 默认值改为空字符串，空值表示跟随主题 | `cookbook/models.py` |
+| 数据迁移只清掉仍等于旧默认值 `#ddbf86` 的行，用户自选的颜色不动 | `cookbook/migrations/0244_neutral_nav_color_default.py` |
+| 两处取色器色板改为中性五色 | `CosmeticSettings.vue`、`SpaceEditor.vue` |
+
+金色原本来自 `UserPreference.nav_bg_color` 的默认值 `#ddbf86`，不是主题里的写死值——所以只改主题不生效，必须连默认值和已有数据一起处理。
+
+## 七、文档本地化
+
+| 内容 | 文件 |
+|---|---|
+| 40 篇上游 Markdown 译为简体中文，文件名与目录结构保持不变 | `docs/index.md`、`docs/faq.md`、`docs/{features,install,system,contribute}/**` |
+| 6 个被跨文档引用的标题用 `{#id}` 固定英文锚点，避免翻译后链接失效 | `install/docker.md`、`install/manual.md`、`system/configuration.md` |
+| 修正 2 处上游本来就悬空的锚点，改指向实际存在的 `#allauth` 小节 | `system/configuration.md` |
+| 文档站导航、站点名、仓库地址汉化 | `mkdocs.yml` |
+| `attr_list` 扩展（`{#id}` 语法依赖它） | `mkdocs.yml` |
+
+译文保留代码块、命令、配置键、环境变量与专有名词原文。验收方式是逐文件对比提交前后的代码围栏数、标题数、表格行数、链接数与 admonition 数——40 个文件全部一致，没有段落被吞。
+
+## 八、交付文档
 
 | 内容 | 文件 |
 |---|---|

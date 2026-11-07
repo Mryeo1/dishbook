@@ -1,44 +1,44 @@
-!!! info "WIP"
-    While being around for a while there are still a lot of features that I plan on adding to the shopping list.
-    You can see an overview of what is still planned on [this](https://github.com/vabene1111/recipes/issues/114) issue.
+!!! info "开发中"
+    尽管购物清单已经存在了一段时间，但我仍计划为其添加许多功能。
+    你可以在[这个](https://github.com/vabene1111/recipes/issues/114) issue 中查看仍在计划中的功能概览。
 
 
-Shopping lists allow you to easily convert a recipe or even a whole meal plan into a shopping list. From there
-you can either use it on the site or export it to your shopping list of choice. 
-It also includes automatic supermarket specific ordering.
+购物清单让你可以轻松地将一个菜谱甚至整个用餐计划转换为购物清单。之后，
+你既可以在站点上直接使用它，也可以将其导出到你选用的购物清单应用。
+它还包含按超市自动排序的功能。
 
 ![Shopping List View](https://user-images.githubusercontent.com/6819595/105896231-d4c29100-6016-11eb-88a2-eb67d8fb3ad2.png)
 
-## Create Shopping Lists
-You have three options to create a shopping list
+## 创建购物清单
+创建购物清单有三种方式
 
-1. Open a recipe of your choice. From the context menu choose `Add to Shoppinglist` and create a new list with the recipe already added.
-2. After adding recipes to the meal plan you can click the little shopping cart icon to add the recipes to the shopping list.
-   They will be shown below the plan, from there you can open a new shopping list with them.
-3. The last option is to open the shopping list page and click the little plus icon to create a new list.
+1. 打开你选择的菜谱。从上下文菜单中选择 `Add to Shoppinglist`，并创建一个已添加该菜谱的新清单。
+2. 将菜谱添加到用餐计划后，你可以点击小小的购物车图标，将菜谱加入购物清单。
+   它们会显示在计划下方，你可以从中用它们创建一个新的购物清单。
+3. 最后一种方式是打开购物清单页面，点击小小的加号图标创建新清单。
 
-## Supermarket Ordering
+## 超市排序
 
-!!! warning "WIP"
-    This feature is relatively new and I did not have the time to completely polished it yet, that said 
-    it already works quite well.
+!!! warning "开发中"
+    该功能相对较新，我还没有时间将其完全打磨好，不过
+    它已经运行得相当不错了。
 
-You can create Supermarket Categories and Supermarkets in the admin interface.
-After setting this up you can choose a supermarket for each shopping list.
-This will automatically show the categories configured for this supermarket in the order specified.
-All Foods that are not yet categorized can be dragged into their category, this will save the categories
-for the future.
+你可以在管理后台创建超市分类和超市。
+完成设置后，你可以为每个购物清单选择一个超市。
+这样就会按指定顺序自动显示为该超市配置的分类。
+所有尚未分类的食物都可以拖入其所属分类，这会保存分类
+以供将来使用。
 
-## Sharing & Autosync
-If you want to collaborate on the creation and usage of the shopping list you can add a user to the list of shared users.
-Each user now has access to the list and can edit it. 
+## 共享与自动同步
+如果你想在购物清单的创建和使用上协作，可以将某个用户添加到共享用户列表中。
+现在每个用户都能访问该清单并编辑它。
 
-When checking items in viewing mode the change is synced to all other clients that currently have the same list open.
-You can set the syncing interval in your user settings.
+在查看模式下勾选条目时，改动会同步到当前打开同一清单的所有其他客户端。
+你可以在用户设置中设置同步间隔。
 
-## Other Features
-There are a few more features worth pointing out
+## 其他功能
+还有几个值得指出的功能
 
-1. You can export recipes for use in other applications (Google Keep, etc.) by using the export button
-2. In the export popup you can define a prefix to be put before each row in case an external app requires that
-3. Marking a shopping list as finished will hide it from the shopping list page
+1. 你可以使用导出按钮导出菜谱，以便在其他应用（Google Keep 等）中使用
+2. 在导出弹窗中，你可以定义添加到每一行前面的前缀，以备外部应用有此需求
+3. 将购物清单标记为已完成会使其在购物清单页面中隐藏

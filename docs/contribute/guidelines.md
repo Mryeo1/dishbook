@@ -1,21 +1,21 @@
-If you want to contribute bug fixes or small tweaks then your pull requests are always welcome!
+如果你想贡献缺陷修复或小幅调整，那么你的 PR 永远受欢迎！
 
 <!-- prettier-ignore-start -->
-!!! danger "Discuss First!"
-     If you want to contribute larger features that introduce more complexity to the project please
-     make sure to **first submit a technical description** outlining what and how you want to do it.
-     This allows me and the community to give feedback and manage the complexity of the overall
-     application. If you don't do this please don't be mad if I reject your PR.
+!!! danger "先讨论！"
+    如果你想贡献会给项目带来更多复杂度的大型功能，请
+    确保**先提交一份技术描述**，概述你想做什么以及如何做。
+    这样可以让我和社区给出反馈，并管理整个
+    应用的复杂度。如果你没有这样做，那么在我拒绝你的 PR 时请不要生气。
 <!-- prettier-ignore-end -->
 
-## License
+## 许可证
 
-Contributing to Tandoor requires signing a Contributor License Agreement. You can review the CLA [here](https://cla-assistant.io/TandoorRecipes/recipes).
+为 Tandoor 做贡献需要签署贡献者许可协议。你可以在[此处](https://cla-assistant.io/TandoorRecipes/recipes)查看该 CLA。
 
-## Linting & Formatting
+## 代码检查与格式化
 
-Tandoor uses a number of libraries to maintain style and formatting consistency.
-To contribute to the project you are required to use the following packages with the project defined configurations:
+Tandoor 使用若干库来保持风格和格式化的一致性。
+要为项目做贡献，你必须按照项目定义的配置使用以下软件包：
 
 - flake8
 - yapf
@@ -23,39 +23,39 @@ To contribute to the project you are required to use the following packages with
 - prettier
 
 <!-- prettier-ignore -->
-!!! tip "Manual Formatting"
-     It is possible to run formatting manually, but it is recommended to setup your IDE to format on save.
-     ``` bash
-     flake8 file.py --ignore=E501 | isort -q file.py | yapf -i file.py
-     prettier --write file.vue
+!!! tip "手动格式化"
+    手动运行格式化是可行的，但建议将 IDE 设置为保存时格式化。
+    ``` bash
+    flake8 file.py --ignore=E501 | isort -q file.py | yapf -i file.py
+    prettier --write file.vue
     ```
 
-## Testing
+## 测试
 
-Django uses pytest-django to implement a full suite of testing. If you make any functional changes, please implement the appropriate
-tests.
+Django 使用 pytest-django 实现完整的测试套件。如果你做了任何功能性更改，请实现相应的
+测试。
 
-Tandoor is also actively soliciting contributors willing to setup vue3 testing. If you have knowledge in this area it would be greatly appreciated.
+Tandoor 也在积极征集愿意搭建 vue3 测试的贡献者。如果你在这方面有知识，将不胜感激。
 
-## API Client
+## API 客户端
 
 <!-- prettier-ignore -->
-!!! note "JAVA required"
-     The OpenAPI Generator is a Java project. You must have the java binary executable available on your PATH for this to work.
+!!! note "需要 JAVA"
+    OpenAPI Generator 是一个 Java 项目。要使其正常工作，你的 PATH 中必须有可执行的 java 二进制文件。
 
-Tandoor uses [django-rest-framework](https://www.django-rest-framework.org/) for API implementation. Making contributions that impact the API requires an understanding of
-ViewSets and Serializers.
+Tandoor 使用 [django-rest-framework](https://www.django-rest-framework.org/) 实现 API。做出会影响 API 的贡献需要理解
+ViewSet 和序列化器。
 
-The API Client is generated automatically from the OpenAPI interface provided by the Django REST framework.
-For this [openapi-generator](https://github.com/OpenAPITools/openapi-generator) is used.
+API 客户端是由 Django REST framework 提供的 OpenAPI 接口自动生成的。
+为此使用了 [openapi-generator](https://github.com/OpenAPITools/openapi-generator)。
 
-Install it using your desired setup method. (For example, using `npm install @openapitools/openapi-generator-cli -g`.)
+使用你偏好的安装方式进行安装。（例如，使用 `npm install @openapitools/openapi-generator-cli -g`。）
 
 ### Vue
 
-Generate the schema using the `generate_api_client.py` script in the main directory. 
+使用主目录中的 `generate_api_client.py` 脚本生成架构。
 
-## Install and Configuration
+## 安装与配置
 
-Instructions for [VSCode](/contribute/vscode)
-Instructions for [PyCharm](/contribute/pycharm)
+[VSCode](/contribute/vscode) 的说明
+[PyCharm](/contribute/pycharm) 的说明

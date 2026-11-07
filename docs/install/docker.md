@@ -1,26 +1,26 @@
-!!! success "Recommended Installation"
-    Setting up this application using Docker is recommended. This does not mean that other options are bad, but its the only method 
-    that is officially maintained and gets regularly tested. 
+!!! success "推荐安装"
+    推荐使用 Docker 搭建本应用。这并不意味着其他方式不好，但它是唯一
+    由官方维护并定期接受测试的方式。
 
-This guide shows you some basic setups using Docker and docker compose. For configuration options see the [configuration page](https://docs.tandoor.dev/system/configuration/).
+本指南展示了一些使用 Docker 和 docker compose 的基础配置方案。关于配置选项，请参阅[配置页面](https://docs.tandoor.dev/system/configuration/)。
 
-## **Versions**
+## **版本**
 
-There are different versions (tags) released on [Docker Hub](https://hub.docker.com/r/vabene1111/recipes/tags).
+[Docker Hub](https://hub.docker.com/r/vabene1111/recipes/tags) 上发布了不同的版本（标签）。
 
--   **latest** Default image. The one you should use if you don't know that you need anything else.
--   **beta** Partially stable version that gets updated every now and then. Expect to have some problems.
--   **develop** If you want the most bleeding-edge version with potentially many breaking changes, feel free to use this version (not recommended!).
--   **X.Y.Z** each released version has its own image. If you need to revert to an old version or want to make sure you stay on one specific use these tags.
+-   **latest** 默认镜像。如果你不确定自己是否需要别的，就使用这个。
+-   **beta** 部分稳定的版本，会不时更新。请做好遇到一些问题的准备。
+-   **develop** 如果你想要最新的、可能包含大量破坏性变更的版本，可以随意使用此版本（不推荐！）。
+-   **X.Y.Z** 每个发布的版本都有自己的镜像。如果你需要回退到旧版本，或者想确保停留在某个特定版本，请使用这些标签。
 
-!!! danger "No Downgrading"
-    There is currently no way to migrate back to an older version as there is no mechanism to downgrade the database.
-    You could probably do it but I cannot help you with that. Choose wisely if you want to use the unstable images.
-    That said **beta** should usually be working if you like frequent updates and new stuff.
+!!! danger "不可降级"
+    目前无法迁移回旧版本，因为没有降级数据库的机制。
+    你或许可以自己做到，但我无法为此提供帮助。如果你想使用不稳定的镜像，请慎重选择。
+    话虽如此，如果你喜欢频繁的更新和新功能，**beta** 通常是可以正常工作的。
 
 ## **Docker**
 
-The docker image (`vabene1111/recipes`) simply exposes the application on the container's port `80` through the integrated nginx webserver.
+Docker 镜像（`vabene1111/recipes`）通过集成的 nginx Web 服务器，在容器的 `80` 端口上暴露应用。
 
 ```shell
 docker run -d \
@@ -38,24 +38,24 @@ docker run -d \
     vabene1111/recipes
 ```
 
-Please make sure to replace the ```SECRET_KEY``` and ```POSTGRES_PASSWORD``` placeholders!
+请务必替换 ```SECRET_KEY``` 和 ```POSTGRES_PASSWORD``` 占位符！
 
 ## **Docker Compose**
 
-The main, and also recommended, installation option for this application is Docker Compose.
+本应用主要的、也是推荐的安装方式是 Docker Compose。
 
-1. Choose your `docker-compose.yml` from the examples below.
-2. Download the `.env` configuration file with `wget`
+1. 从下面的示例中选择你的 `docker-compose.yml`。
+2. 使用 `wget` 下载 `.env` 配置文件
     ```shell
     wget https://raw.githubusercontent.com/vabene1111/recipes/develop/.env.template -O .env
     ```
-3. **Edit it accordingly** (you NEED to set `SECRET_KEY`, `ALLOWED_HOSTS` and `POSTGRES_PASSWORD`), see [configuration page](https://docs.tandoor.dev/system/configuration/).
-4. Start your container using `docker-compose up -d`.
+3. **相应地编辑它**（你必须设置 `SECRET_KEY`、`ALLOWED_HOSTS` 和 `POSTGRES_PASSWORD`），参见[配置页面](https://docs.tandoor.dev/system/configuration/)。
+4. 使用 `docker-compose up -d` 启动容器。
 
 ### **Plain**
 
-This configuration exposes the application through a containerized nginx web server on port 80 of your machine.
-Be aware that having some other web server or container running on your host machine on port 80 will block this from working.
+此配置通过容器化的 nginx Web 服务器，在你机器的 80 端口上暴露应用。
+请注意，如果宿主机上的 80 端口有其他 Web 服务器或容器在运行，将会阻止其工作。
 
 ```shell
 wget https://raw.githubusercontent.com/vabene1111/recipes/develop/docs/install/docker/plain/docker-compose.yml
@@ -65,18 +65,18 @@ wget https://raw.githubusercontent.com/vabene1111/recipes/develop/docs/install/d
 {% include "./docker/plain/docker-compose.yml" %}
 ~~~
 
-### **Reverse Proxy**
+### **反向代理** {#reverse-proxy}
 
-Most deployments will likely use a reverse proxy.
+大多数部署可能会使用反向代理。
 
 #### **Traefik**
 
-If you use Traefik, this configuration is the one for you.
+如果你使用 Traefik，那么这个配置适合你。
 
 !!! info
-    Traefik can be a little confusing to setup.
-    Please refer to [their excellent documentation](https://doc.traefik.io/traefik/). If that does not help,
-    [this little example](traefik.md) might be for you.
+    Traefik 的配置可能有些令人困惑。
+    请参考[其出色的文档](https://doc.traefik.io/traefik/)。如果这没有帮助，
+    [这个小示例](traefik.md)可能适合你。
 
 ```shell
 wget https://raw.githubusercontent.com/vabene1111/recipes/develop/docs/install/docker/traefik-nginx/docker-compose.yml
@@ -87,17 +87,17 @@ wget https://raw.githubusercontent.com/vabene1111/recipes/develop/docs/install/d
 ~~~
 
 
-#### **jwilder's Nginx-proxy**
+#### **jwilder 的 Nginx-proxy**
 
-This is a docker compose example using [jwilder's nginx reverse proxy](https://github.com/jwilder/docker-gen)
-in combination with [jrcs's letsencrypt companion](https://hub.docker.com/r/jrcs/letsencrypt-nginx-proxy-companion/).
+这是一个 docker compose 示例，结合使用 [jwilder 的 nginx 反向代理](https://github.com/jwilder/docker-gen)
+和 [jrcs 的 letsencrypt companion](https://hub.docker.com/r/jrcs/letsencrypt-nginx-proxy-companion/)。
 
-Please refer to the appropriate documentation on how to setup the reverse proxy and networks.
+请参考相应的文档来了解如何设置反向代理和网络。
 
-!!! warning "Adjust client_max_body_size"
-    By using jwilder's Nginx-proxy, uploads will be restricted to 1 MB file size. This can be resolved by adjusting the ```client_max_body_size``` variable in the jwilder nginx configuration.
+!!! warning "调整 client_max_body_size"
+    使用 jwilder 的 Nginx-proxy 时，上传将被限制为 1 MB 的文件大小。可以通过调整 jwilder nginx 配置中的 ```client_max_body_size``` 变量来解决。
 
-Remember to add the appropriate environment variables to the `.env` file:
+记得将相应的环境变量添加到 `.env` 文件中：
 
 ```
 VIRTUAL_HOST=
@@ -114,39 +114,37 @@ wget https://raw.githubusercontent.com/vabene1111/recipes/develop/docs/install/d
 ~~~
 
 
-#### **Apache proxy**
+#### **Apache 代理**
 
-If you use Apache as a reverse proxy, this configuration is the one for you.
+如果你使用 Apache 作为反向代理，那么这个配置适合你。
 
 ~~~yaml
 {% include "./docker/apache-proxy/docker-compose.yml" %}
 ~~~
 
-Keep in mind, that the port configured for the service `web_recipes` should be the same as in chapter [Required Headers: Apache](#apache).
+请记住，为服务 `web_recipes` 配置的端口应与章节 [必需的请求头：Apache](#apache) 中的端口相同。
 
 ## **DockSTARTer**
 
-The main goal of [DockSTARTer](https://dockstarter.com/) is to make it quick and easy to get up and running with Docker.
-You may choose to rely on DockSTARTer for various changes to your Docker system or use DockSTARTer as a stepping stone and learn to do more advanced configurations.
-Follow the guide for installing DockSTARTer and then run `ds` then select 'Configuration' and 'Select Apps' to get Tandoor up and running quickly and easily.
+[DockSTARTer](https://dockstarter.com/) 的主要目标是让 Docker 的上手和运行变得快速而简单。
+你可以选择依靠 DockSTARTer 对你的 Docker 系统进行各种更改，也可以将 DockSTARTer 作为垫脚石，学习进行更高级的配置。
+按照指南安装 DockSTARTer，然后运行 `ds`，再选择「Configuration」和「Select Apps」，即可快速轻松地启动并运行 Tandoor。
 
 
 !!!note
-    DockSTARTer might not be updated for Tandoor 2 configurations
+    DockSTARTer 可能尚未针对 Tandoor 2 的配置进行更新
 
-## **Additional Information**
+## **附加信息**
 
-### **Nginx Config**
-Starting with Tandoor 2 the Docker container includes a nginx service. Its default configuration is pulled from the [http.d](https://github.com/TandoorRecipes/recipes/tree/develop/http.d) folder
-in the repository. 
+### **Nginx 配置**
+从 Tandoor 2 开始，Docker 容器包含一个 nginx 服务。其默认配置从仓库中的 [http.d](https://github.com/TandoorRecipes/recipes/tree/develop/http.d) 文件夹拉取。
 
-You can setup a volume to link to the ```/opt/recipes/http.d``` folder inside your container to change the configuration. Keep in mind that you will not receive any updates on the configuration 
-if you manually change it/bind the folder as a volume. 
+你可以设置一个卷，链接到容器内的 ```/opt/recipes/http.d``` 文件夹来更改配置。请记住，如果你是手动更改配置/将该文件夹绑定为卷，你将不会收到配置的任何更新。
 
 
-### **Required Headers**
+### **必需的请求头** {#required-headers}
 
-Please be sure to supply all required headers in your nginx/Apache/Caddy/... configuration!
+请确保在你的 nginx/Apache/Caddy/... 配置中提供所有必需的请求头！
 
 #### **nginx**
 
@@ -159,7 +157,7 @@ location / {
 }
 ```
 
-#### **Apache**
+#### **Apache** {#apache}
 
 ```apache
 RequestHeader set X-Forwarded-Proto "https"
@@ -171,29 +169,28 @@ ProxyPass / http://localhost:8080/ # replace port
 ProxyPassReverse / http://localhost:8080/ # replace port
 ```
 
-### **Setup issues on Raspberry Pi**
+### **Raspberry Pi 上的安装问题** {#setup-issues-on-raspberry-pi}
 
 !!! danger
-    Tandoor 2 does no longer build images for arm/v7 architectures. You can certainly get Tandoor working there but it has simply been to much effort to maintain these architectures over the past years
-    to justify the continued support of this mostly deprecated platform. 
+    Tandoor 2 不再为 arm/v7 架构构建镜像。你当然可以在这些架构上让 Tandoor 运行起来，但过去这些年维护这些架构的投入实在太大，
+    无法为这个基本已弃用的平台继续提供支持。
 
 !!!info
-    Always wait at least 2-3 minutes after the very first start, since migrations will take some time!
+    首次启动后请务必至少等待 2-3 分钟，因为迁移会花费一些时间！
 
 
-If you're having issues with installing Tandoor on your Raspberry Pi or similar device,
-follow these instructions:
+如果你在 Raspberry Pi 或类似设备上安装 Tandoor 时遇到问题，
+请按照以下说明操作：
 
-- Stop all Tandoor containers (`docker-compose down`)
-- Delete local database folder (usually 'postgresql' in the same folder as your 'docker-compose.yml' file)
-- Start Tandoor containers again (`docker-compose up -d`)
-- Wait for at least 2-3 minutes and then check if everything is working now (migrations can take quite some time!)
-- If not, check logs of the web_recipes container with `docker logs <container_name>` and make sure that all migrations are indeed already done
+- 停止所有 Tandoor 容器（`docker-compose down`）
+- 删除本地数据库文件夹（通常是位于 `docker-compose.yml` 文件所在目录中的「postgresql」）
+- 再次启动 Tandoor 容器（`docker-compose up -d`）
+- 至少等待 2-3 分钟，然后检查现在是否一切正常（迁移可能会花费相当长的时间！）
+- 如果仍不正常，请使用 `docker logs <container_name>` 检查 web_recipes 容器的日志，并确认所有迁移确实已经完成
 
-### Sub Path nginx config
+### 子路径 nginx 配置
 
-If hosting under a sub-path you might want to change the default nginx config
-with the following config.
+如果托管在子路径下，你可能想使用以下配置更改默认的 nginx 配置。
 
 ```nginx
 location /my_app { # change to subfolder name
@@ -219,10 +216,10 @@ location /static/ {
 
 }
 ```
-### Tandoor 1 vs Tandoor 2
-Tandoor 1 includes gunicorn, a python WSGI server that handles python code well but is not meant to serve mediafiles. Thus, it has always been recommended to set up a nginx webserver 
-(not just a reverse proxy) in front of Tandoor to handle mediafiles. The gunicorn server by default is exposed on port 8080.
+### Tandoor 1 与 Tandoor 2
+Tandoor 1 包含 gunicorn，这是一个 Python WSGI 服务器，能很好地处理 Python 代码，但不适合提供媒体文件。因此，一直建议在 Tandoor 前面设置一个 nginx Web 服务器
+（而不仅仅是反向代理）来处理媒体文件。gunicorn 服务器默认暴露在 8080 端口。
 
-Tandoor 2 now bundles nginx inside the container and exposes port 80 where mediafiles are handled by nginx and all the other requests are (mostly) passed to gunicorn.
+Tandoor 2 现在将 nginx 打包进容器内，并暴露 80 端口，媒体文件由 nginx 处理，所有其他请求（大部分）传递给 gunicorn。
 
-A [GitHub Issue](https://github.com/TandoorRecipes/recipes/issues/3851) has been created to allow for discussions and FAQ's on this issue while this change is fresh. It will later be updated in the docs here if necessary. 
+已创建一个 [GitHub Issue](https://github.com/TandoorRecipes/recipes/issues/3851) 用于在此变更刚刚推出期间就此问题展开讨论和常见问题解答。如有必要，之后会在此处的文档中更新。

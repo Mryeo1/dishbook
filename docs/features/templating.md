@@ -1,32 +1,32 @@
 !!! danger
-    The version containing Templating is not yet released! This documentation is only to illustrate the pending changes
-    facilitate the discussion.
+    包含模板功能的版本尚未发布！本文档仅用于说明待定的变更，
+    以便推动讨论。
 
-With the Version `0.14.0` support for using a custom Jinja2 Template in recipe step instructions has been added.
+从 `0.14.0` 版本起，已支持在菜谱步骤说明中使用自定义的 Jinja2 模板。
 
-This allows you to write ingredients with their corresponding amount directly inside the text while still profiting
-from recipe scaling.
+这样你就能在文本中直接写入食材及其对应的用量，同时仍能受益于
+菜谱的用量缩放。
 
 ![2021-01-05_22-26](https://user-images.githubusercontent.com/6819595/103701386-3e1a2b80-4fa6-11eb-93d1-6257e65bb5b1.gif)
 
 !!! info
-    Templating is a very new feature and still WIP. Feel free to open an issue to provide feedback and ideas.
-    Please also refer to [Issue #218](https://github.com/vabene1111/recipes/issues/218) where this feature has been discussed.
+    模板功能是一个非常新的功能，仍处于开发中。欢迎提交 issue 以提供反馈和想法。
+    另请参阅讨论过该功能的 [Issue #218](https://github.com/vabene1111/recipes/issues/218)。
 
-## Using Templating
-Currently the only available variable in the Templating context is `ingredients`.
+## 使用模板
+目前模板上下文中唯一可用的变量是 `ingredients`。
 
-`ingredients` is an array that contains all ingredients of the current recipe step. You can access an ingredient by using
-`{{ ingredients[<index in list>] }}` where the index refers to the position in the list of ingredients starting with zero.
-You can also use the interaction menu of the ingredient to copy its reference.
+`ingredients` 是一个数组，包含当前菜谱步骤的所有食材。你可以使用
+`{{ ingredients[<index in list>] }}` 访问某个食材，其中的索引指食材列表中的位置，从零开始。
+你也可以使用食材的交互菜单复制其引用。
 
 !!! warning
-    Please note that changing the order of the ingredients will break the reference (or at least make it useless).
-    See the technical reasoning for more information on why it is this way.
+    请注意，更改食材的顺序会使引用失效（至少会使其变得无用）。
+    有关为何如此的更多信息，请参阅技术原理部分。
 
 ![image](https://user-images.githubusercontent.com/6819595/103709654-5d6b8580-4fb3-11eb-9d04-36ab5a993f90.png)
 
-You can also access only the amount, unit, note or food inside your instruction text using
+你也可以在说明文本中仅访问用量、单位、备注或食物，方式如下
 ```
 {{ ingredients[0].amount }}
 {{ ingredients[0].unit }}
@@ -34,13 +34,13 @@ You can also access only the amount, unit, note or food inside your instruction 
 {{ ingredients[0].note }}
 ```
 
-## Technical Reasoning
-There are several options how the ingredients in the list can be related to the Template Context in the Text.
+## 技术原理
+列表中的食材与文本中的模板上下文之间可以有几种关联方式。
 
-The template could access them by ID, the food name or the position in the list. All options have their benefits and disadvantages.
+模板可以通过 ID、食物名称或列表中的位置来访问它们。每种方案都有其优点和缺点。
 
-1. **ID**: ugly to write and read when not rendered and also more complex from a technical standpoint
-2. **Name**: very nice to read and easy but does not work when a food occurs twice in a step. Could have workaround but would then be inconsistent.
-3. **Position**: easy to write and understand but breaks when ordering is changed and not really nice to read when instructions are not rendered.
+1. **ID**：在未渲染时书写和阅读都很丑陋，从技术角度来看也更复杂
+2. **名称**：阅读体验很好且简单，但当同一食物在一个步骤中出现两次时就无法工作。可以有变通方案，但那样会不一致。
+3. **位置**：易于书写和理解，但顺序改变时会失效，而且在说明未渲染时阅读体验并不好。
 
-I decided to go for the position based system. If you know of any better way feel free to open an issue or PR.
+我决定采用基于位置的方案。如果你知道任何更好的方式，欢迎提交 issue 或 PR。

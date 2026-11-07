@@ -1,54 +1,54 @@
-!!! info "Community Contributed"
-    This guide was contributed by the community and is neither officially supported, nor updated or tested.
+!!! info "社区贡献"
+    本指南由社区贡献，既不受官方支持，也不保证更新或测试。
 
-!!! danger "Tandoor 2 Compatibility"
-    This guide has not been verified/tested for Tandoor 2, which now integrates a nginx service inside the default docker container and exposes its service on port 80 instead of 8080.
+!!! danger "Tandoor 2 兼容性"
+    本指南尚未针对 Tandoor 2 进行验证/测试，Tandoor 2 现在在默认 Docker 容器内集成了 nginx 服务，并将其服务暴露在 80 端口而非 8080 端口。
 
-These are instructions for pacman based distributions, like ArchLinux. The package is available from the [AUR](https://aur.archlinux.org/packages/tandoor-recipes-git) or from [GitHub](https://github.com/jdecourval/tandoor-recipes-pkgbuild).
+以下是适用于基于 pacman 的发行版（如 ArchLinux）的说明。该软件包可从 [AUR](https://aur.archlinux.org/packages/tandoor-recipes-git) 或 [GitHub](https://github.com/jdecourval/tandoor-recipes-pkgbuild) 获取。
 
-## Features
-- systemd integration.
-- Provide configuration for Nginx.
-- Use socket activation.
-- Use a non-root user.
-- Apply migrations automatically.
+## 功能
+- systemd 集成。
+- 提供 Nginx 配置。
+- 使用 socket 激活。
+- 使用非 root 用户。
+- 自动应用迁移。
 
-## Installation
-1. Clone the package, build and install with makepkg:
+## 安装
+1. 克隆软件包，使用 makepkg 构建并安装：
 ```shell
 git clone https://aur.archlinux.org/tandoor-recipes-git.git
 cd tandoor-recipes-git
 makepkg -si
 ```
-or use your favourite AUR helper.
+或使用你喜欢的 AUR 助手。
 
-2. Setup a PostgreSQL database and user, as explained here: https://docs.tandoor.dev/install/manual/#setup-postgresql
+2. 设置 PostgreSQL 数据库和用户，方法见：https://docs.tandoor.dev/install/manual/#setup-postgresql
 
-3. Configure the service in `/etc/tandoor/tandoor.conf`.
+3. 在 `/etc/tandoor/tandoor.conf` 中配置服务。
 
-4. Reinstall the package, or follow [the official instructions](https://docs.tandoor.dev/install/manual/#initialize-the-application) to have tandoor creates its DB tables.
+4. 重新安装软件包，或按照[官方说明](https://docs.tandoor.dev/install/manual/#initialize-the-application)让 Tandoor 创建其数据库表。
 
-5. Optionally configure a reverse proxy. A configuration for Nginx is provided, but you can Traefik, Apache, etc..
-Edit `/etc/nginx/sites-available/tandoor.conf`. You may want to use another `server_name`, or configure TLS. Then:
+5. 可选地配置反向代理。已提供 Nginx 的配置，但你也可以使用 Traefik、Apache 等。
+编辑 `/etc/nginx/sites-available/tandoor.conf`。你可能需要改用另一个 `server_name`，或配置 TLS。然后：
 ```shell
 cd /etc/nginx/sites-enabled
 ln -s ../sites-available/tandoor.conf
 systemctl restart nginx
 ```
 
-6. Enable the service
+6. 启用服务
 ```shell
 systemctl enable --now tandoor
 ```
 
-## Upgrade
+## 升级
 ```shell
 cd tandoor-recipes-git
 git pull
 makepkg -sif
 ```
-Or use your favourite AUR helper.
-You shouldn't need to do anything else. This package applies migration automatically. If PostgreSQL has been updated to a new major version, you may need to [run pg_upgrade](https://wiki.archlinux.org/title/PostgreSQL#pg_upgrade).
+或使用你喜欢的 AUR 助手。
+你无需执行其他操作。该软件包会自动应用迁移。如果 PostgreSQL 已更新到新的主版本，你可能需要[运行 pg_upgrade](https://wiki.archlinux.org/title/PostgreSQL#pg_upgrade)。
 
-## Help
-This package is non-official. Issues should be posted to https://github.com/jdecourval/tandoor-recipes-pkgbuild or https://aur.archlinux.org/packages/tandoor-recipes-git.
+## 帮助
+该软件包为非官方包。问题应提交至 https://github.com/jdecourval/tandoor-recipes-pkgbuild 或 https://aur.archlinux.org/packages/tandoor-recipes-git。

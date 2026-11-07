@@ -1,26 +1,26 @@
-The documentation is built from the markdown files in the [docs](https://github.com/vabene1111/recipes/tree/develop/docs)
-folder of the GitHub repository.
+文档由 GitHub 仓库 [docs](https://github.com/vabene1111/recipes/tree/develop/docs)
+文件夹中的 Markdown 文件构建而成。
 
-In order to contribute to the documentation, there are a couple of methods that you can use.
+要为文档做贡献，有几种方法可供使用。
 
-## Directly on GitHub
+## 直接在 GitHub 上
 
-You can fork the develop repository and edit the markdown files directly on the GitHub website.
+你可以派生 develop 仓库，并直接在 GitHub 网站上编辑 Markdown 文件。
 
-## With an IDE
+## 使用 IDE
 
-You can fork the develop repository and edit the markdown files from your favorite IDE such as VSCode or PyCharm.
-One advantage of using as IDE is that you can preview your changes by:
+你可以派生 develop 仓库，并在你喜欢的 IDE（例如 VSCode 或 PyCharm）中编辑 Markdown 文件。
+使用 IDE 的一个好处是，你可以通过以下方式预览更改：
 
-### Installing mkdocs
+### 安装 mkdocs
 
-Now install mkdocs and dependencies: `pip install mkdocs-material mkdocs-include-markdown-plugin`.
+现在安装 mkdocs 及其依赖：`pip install mkdocs-material mkdocs-include-markdown-plugin`。
 
-### Serving Documetation
+### 提供文档服务
 
-If you want to test the documentation, locally run `mkdocs serve` from the project root.
+如果你想测试文档，请在项目根目录下本地运行 `mkdocs serve`。
 
-## Super Low Tech
+## 超低技术门槛
 
-Create your documentation in any work processor (or even create a video!) and [open a feature request](https://github.com/vabene1111/recipes/issues)
-attaching your document and requesting that someone add the documentation to Tandoor.
+用任何文字处理软件撰写你的文档（甚至制作一段视频！），然后[提出功能请求](https://github.com/vabene1111/recipes/issues)
+附上你的文档并请求有人把该文档添加到 Tandoor 中。

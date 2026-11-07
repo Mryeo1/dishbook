@@ -1,32 +1,31 @@
-!!! info "Community Contributed"
-    This guide was contributed by the community and is neither officially supported, nor updated or tested. 
-    Many thanks to [alexbelgium](https://github.com/alexbelgium) for making implementing everything required to have 
-    Tandoor run in HA.
+!!! info "社区贡献"
+    本指南由社区贡献，既不受官方支持，也不保证更新或测试。
+    非常感谢 [alexbelgium](https://github.com/alexbelgium) 为实现让 Tandoor 在 HA 中运行所需的一切所做的工作。
 
-!!! danger "Tandoor 2 Compatibility"
-    This guide has not been verified/tested for Tandoor 2, which now integrates a nginx service inside the default docker container and exposes its service on port 80 instead of 8080.
+!!! danger "Tandoor 2 兼容性"
+    本指南尚未针对 Tandoor 2 进行验证/测试，Tandoor 2 现在在默认 Docker 容器内集成了 nginx 服务，并将其服务暴露在 80 端口而非 8080 端口。
 
 ![Addon version](https://img.shields.io/badge/dynamic/json?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ftandoor_recipes%2Fconfig.json) ![Last update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Falexbelgium%2Fhassio-addons%2Fmaster%2Ftandoor_recipes%2Fupdater.json) ![aarch64][aarch64-badge] ![amd64][amd64-badge] ![armv7][armv7-badge]
 
-### Introduction
-[Home Assistant (HA)](https://www.home-assistant.io/) is a free and open-source software for home automation designed to be a central control system for smart home devices with a focus on local control and privacy. It can be accessed through a web-based user interface by using companion apps for Android and iOS, or by voice commands via a supported virtual assistant such as Google Assistant or Amazon Alexa.
+### 简介
+[Home Assistant (HA)](https://www.home-assistant.io/) 是一款免费开源的智能家居自动化软件，旨在成为智能家居设备的中央控制系统，注重本地控制与隐私。你可以通过 Android 和 iOS 配套应用访问基于 Web 的用户界面，或通过受支持的虚拟助手（如 Google Assistant 或 Amazon Alexa）以语音命令访问。
 
-It can be [installed](https://www.home-assistant.io/installation/) as a standalone Operating System on a dedicated system, making it easy to deploy and maintain through Over The Air updates. It can also be installed as Docker container.
+它可以作为独立操作系统[安装](https://www.home-assistant.io/installation/)在专用系统上，通过空中下载（OTA）更新即可轻松部署和维护。它也可以作为 Docker 容器安装。
 
-In addition to its large depth of native functions, modular addons can be added to expand its functions. An addon for Tandoor Recipes was created, allowing to store the server on the Home Assistant devices and access the user interface either through direct web access or securely through the native Home Assistant app.
+除了丰富的原生功能外，还可以添加模块化附加组件来扩展功能。已创建了 Tandoor Recipes 的附加组件，可将服务器存储在 Home Assistant 设备上，并通过直接 Web 访问或通过原生 Home Assistant 应用安全地访问用户界面。
 
-### Installation
+### 安装
 
-1. Once you have a running Home Assistant system, the next step is to add the [alexbelgium](https://github.com/alexbelgium)'s custom repository to your system. This is performed by clicking on the button below, and simply filling your HA url. [![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Falexbelgium%2Fhassio-addons)
-2. Install the addon [![Install the addon](https://my.home-assistant.io/badges/supervisor_store.svg)](https://my.home-assistant.io/redirect/supervisor_store)
-3. Set the add-on options to your preferences (see below)
-4. Start the add-on
-5. Check the logs of the add-on to see if everything went well.
-6. Open the webUI (either through Ingress, or direct webUI with http://homeassistant.local:9928) and adapt the software options
+1. 当你的 Home Assistant 系统运行后，下一步是将 [alexbelgium](https://github.com/alexbelgium) 的自定义仓库添加到系统中。点击下方按钮并填写你的 HA 网址即可完成。[![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Falexbelgium%2Fhassio-addons)
+2. 安装附加组件 [![Install the addon](https://my.home-assistant.io/badges/supervisor_store.svg)](https://my.home-assistant.io/redirect/supervisor_store)
+3. 按你的偏好设置附加组件选项（见下文）
+4. 启动附加组件
+5. 查看附加组件的日志，确认一切正常。
+6. 打开 webUI（通过 Ingress，或直接访问 http://homeassistant.local:9928），并调整软件选项
 
-### Configuration
+### 配置
 
-The following environment variable are configurable from the addon options. Please see the [Docker documentation](https://docs.tandoor.dev/install/docker/) for more information on how they should be filled.
+以下环境变量可通过附加组件选项配置。关于如何填写这些变量，请参阅 [Docker 文档](https://docs.tandoor.dev/install/docker/)。
 
 ```yaml
 Required :
@@ -42,19 +41,19 @@ Optional :
     "POSTGRES_DB": "str?" # Needed for postgresql_external
 ```
 
-### Updates and backups
+### 更新与备份
 
-The alexbelgium's repo incorporates a script that aligns every 3 days the addon to the containers released. Just wait a few hours for HA to refreshes its repo list and the uodate will be proposed automatically in your HA system.
+alexbelgium 的仓库包含一个脚本，每 3 天将附加组件与已发布的容器同步一次。只需等待几个小时，让 HA 刷新其仓库列表，更新就会自动在你的 HA 系统中提示。
 
-It is recommended to frequently backup. All data is stored outside of the addon, the main location `/config/addons_config/tandoor_recipes`, so be sure to backup this folder in addition to the addon itself when updating. If you have selected mariadb as database option, don't forget to also backup it.
+建议经常备份。所有数据都存储在附加组件之外，主要位置为 `/config/addons_config/tandoor_recipes`，因此更新时除了备份附加组件本身，还要确保备份此文件夹。如果你选择 mariadb 作为数据库选项，别忘了也备份它。
 
-### Support
+### 支持
 
-Issues related to the addon itself should be reported on the [maintainer repo][repository].
+与附加组件本身相关的问题应提交到[维护者仓库][repository]。
 
-Issues related to HA should be reported on the [HA Community Forum][forum].
+与 HA 相关的问题应提交到 [HA 社区论坛][forum]。
 
-Issues related to Tandoor recipes should be reported on this github repo.
+与 Tandoor Recipes 相关的问题应提交到本 GitHub 仓库。
 
 [aarch64-badge]: https://img.shields.io/badge/aarch64-yes-green.svg?logo=arm
 [amd64-badge]: https://img.shields.io/badge/amd64-yes-green.svg?logo=amd

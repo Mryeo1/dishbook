@@ -39,7 +39,7 @@
 
 | 问题 | 说明 |
 |---|---|
-| `vue-tsc --noEmit` 跑不起来 | 仓库锁定 TypeScript `7.0.2`（原生预览版），`vue-tsc 3.3.13` 读不到它的 `package.json` 导出，报 `ERR_PACKAGE_PATH_NOT_EXPORTED`。降级 TS 会牵动 vite 8 的构建链，因此没有在本次改动里动它；前端改用 `vitest` 兜住纯逻辑，组件层靠截图回归 |
+| `vue-tsc --noEmit` 跑不起来 | 仓库锁定 TypeScript `7.0.2`（原生预览版），`vue-tsc 3.3.13` 读不到它的 `package.json` 导出，报 `ERR_PACKAGE_PATH_NOT_EXPORTED`。降级 TS 会牵动 vite 8 的构建链，因此没有在本次改动里动它；前端改用 `vitest`（当前 22 条）兜住纯逻辑，组件层靠截图回归 |
 | 无 ESLint 配置 | 上游从未接入，一次性开启会在存量代码上产生上千条告警。正确做法是分批 `--max-warnings` 收敛，不适合和功能改造混在一起提交 |
 
 ## 五、怎么复查

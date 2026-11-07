@@ -8,6 +8,12 @@
 
 <h4 align="center">让您从容管理不断增长的电子菜谱收藏的菜谱管理器。</h4>
 
+!!! info "关于本页"
+    本页译自上游项目 [Tandoor Recipes](https://github.com/vabene1111/recipes) 的文档。
+    食单是基于 Tandoor 二次开发的版本：功能说明大体适用，但品牌、默认语言以及本仓库
+    相对上游的改动，请以 [改动记录](CHANGES.md) 和 [已知问题](KNOWN_ISSUES.md) 为准。
+    文中的 Discord、社区与路线图等内容仍指向上游项目。
+
 <p align="center">
 <a href="https://github.com/vabene1111/recipes/actions" target="_blank" rel="noopener noreferrer"><img src="https://github.com/vabene1111/recipes/workflows/Continuous%20Integration/badge.svg?branch=master" ></a>
 <a href="https://github.com/vabene1111/recipes/stargazers" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/github/stars/vabene1111/recipes" ></a>
@@ -31,16 +37,16 @@
 
 ## 核心功能
 - 🥗 **管理菜谱**：编辑器快速且直观
-- 📆 **安排膳食**：为每一天规划多餐
-- 🛒 **购物清单**：可由膳食计划生成，也可直接从菜谱生成
-- 📚 **食谱书**：把菜谱归集成册
+- 📆 **安排用餐计划**：为每一天规划多餐
+- 🛒 **购物清单**：可由用餐计划生成，也可直接从菜谱生成
+- 📚 **菜谱本**：把菜谱整理成册
 - 👪 **分享协作**：与亲友共同维护菜谱
 
 ## 为进阶用户打造
 
 - 🔍 强大且可定制的**搜索**，支持全文检索与 [TrigramSimilarity](https://docs.djangoproject.com/en/3.0/ref/contrib/postgres/search/#trigram-similarity)
-- 🏷️ 创建并搜索**标签**，可按筛选条件批量分配给匹配的文件
-- ↔️ 快速**合并**和重命名食材、标签与单位
+- 🏷️ 创建并搜索**关键词**，可按筛选条件批量分配给匹配的菜谱
+- ↔️ 快速**合并**和重命名食材、关键词与单位
 - 📥️ 从数千个支持 [ld+json 或 microdata](https://schema.org/Recipe) 的网站**导入菜谱**
 - ➗ 支持**分数**与**小数**显示
 - 🐳 借助 **Docker** 轻松部署，并提供 **Kubernetes**、**Unraid** 和 **Synology** 的示例配置

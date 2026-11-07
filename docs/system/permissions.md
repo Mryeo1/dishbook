@@ -1,34 +1,32 @@
 !!! danger "WIP"
-    This application was developed for private use in a trusted environment.
-    Due to popular demand a basic permission system has been added. 
-    It does its job protecting the most critical parts of the application, but it is **not yet recommended** to 
-    give accounts to completely untrusted users.
-    Work is done to improve the permission system, but it's not yet fully done and tested.
+    本应用是为在可信环境中私人使用而开发的。
+    应众多用户的要求，我们加入了一套基础权限系统。
+    它能起到保护应用最关键部分的作用，但**目前仍不建议**把账号提供给完全不受信任的用户。
+    我们正在改进权限系统，但尚未完全完成和测试。
 
-## Permission levels
-The following table roughly defines the capabilities of each role
+## 权限级别
+下表大致定义了各角色的能力
 
-| Group            | Capabilities                                                 |
+| 分组            | 能力                                                 |
 | ---------------- | ------------------------------------------------------------ |
-| logged in user   | Can do almost nothing without a group.                        |
-| guest            | - Search and view recipes<br />- write comments <br />- change user settings (e.g. language, theme, password) |
-| user             | Can do basically everything except for what admins can do    |
-| admin            | - Create, edit and delete external storage<br />- Create, edit and delete synced paths |
-| django superuser | Ignores all permission checks and can access admin interface |
+| logged in user   | 没有分组时几乎什么都不能做。                        |
+| guest            | - 搜索并查看菜谱<br />- 撰写评论 <br />- 修改用户设置（例如语言、主题、密码） |
+| user             | 基本可以做除管理员权限范围之外的所有事情    |
+| admin            | - 创建、编辑和删除外部存储<br />- 创建、编辑和删除同步路径 |
+| django superuser | 忽略所有权限检查，并可访问管理后台 |
 
-## Creating User accounts
-
-!!! warning
-    Users without groups cannot do anything. Make sure to assign them a group!
-
-You can either create new users through the admin interface or by sending them invite links.
-
-Invite links can be generated on the System page. If you specify a username during the creation of the link 
-the person using it won't be able to change that name.
-
-## Managing Permissions
-Management of permissions can currently only be achieved through the django admin interface.
+## 创建用户账号
 
 !!! warning
-    Please do not rename the groups as this breaks the permission system.
+    没有分组的用户无法执行任何操作。请务必为他们分配分组！
 
+您可以通过管理后台创建新用户，也可以向他们发送邀请链接。
+
+邀请链接可以在系统页面生成。如果您在创建链接时指定了用户名，
+使用该链接的人将无法更改该用户名。
+
+## 管理权限
+目前只能通过 Django 管理后台来管理权限。
+
+!!! warning
+    请不要重命名这些分组，否则会破坏权限系统。

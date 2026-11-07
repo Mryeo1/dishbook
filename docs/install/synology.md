@@ -1,17 +1,17 @@
-!!! info "Community Contributed"
-    This guide was contributed by the community and is neither officially supported, nor updated or tested. Since I cannot test it myself, feedback and improvements are always very welcome.
+!!! info "社区贡献"
+    本指南由社区贡献，既不受官方支持，也不保证更新或测试。由于我无法亲自测试，欢迎随时提供反馈和改进建议。
 
-## **Instructions**
+## **说明**
 
-Basic guide to setup `vabenee1111/recipes` docker container on Synology NAS.
+在群晖 NAS 上设置 `vabenee1111/recipes` Docker 容器的基本指南。
 
-### 1. Preparations
-- Login to Synology DSM through your browser
-- Install `Container Manager` through package center
-- Install `Text Editor` through package center (needed to edit `.env` if you don't edit it locally first)
-- If you do not already have a shared `docker` folder in your File Station, create one at the root of your volume. 
-- inside of your `volume1/docker` folder, create a `recipes` folder. 
-- Within, create the necessary folder structure. You will need these folders:
+### 1. 准备工作
+- 通过浏览器登录群晖 DSM
+- 通过套件中心安装 `Container Manager`
+- 通过套件中心安装 `Text Editor`（如果你不在本地先编辑 `.env`，则需要用它来编辑）
+- 如果你的 File Station 中还没有共享的 `docker` 文件夹，请在卷的根目录创建一个。 
+- 在 `volume1/docker` 文件夹内创建 `recipes` 文件夹。 
+- 在其中创建必要的文件夹结构。你需要以下文件夹：
 
 ```
 volume1/docker/
@@ -22,39 +22,39 @@ volume1/docker/
 │  ├─ nginx_config/
 ```
 
-### 2. `.env` and `docker-compose.yml`
-!!!info The guide uses the `plain` setup.
+### 2. `.env` 与 `docker-compose.yml`
+!!!info 本指南使用 `plain` 设置。
 
-- Open the [.env template](https://github.com/vabene1111/recipes/blob/develop/.env.template)
-  - Copy the text and save it as `.env.txt` to your recipes folder (the .txt extension allows you to modify it)
-  - Open the file with Text Editor. Populate the necessary fields, such as `SECRET_KEY` and `POSTGRES_PASSWORD`. 
-  - Save the file and then rename it as `.env` (without the .txt extension) 
-- Open the [docker-compose.yml template](https://raw.githubusercontent.com/TandoorRecipes/recipes/refs/heads/develop/docs/install/docker/plain/docker-compose.yml)
-  - Copy the text and keep reading. 
+- 打开 [.env 模板](https://github.com/vabene1111/recipes/blob/develop/.env.template)
+  - 复制文本并将其作为 `.env.txt` 保存到你的 recipes 文件夹（.txt 扩展名允许你修改它）
+  - 使用 Text Editor 打开该文件。填写必要字段，例如 `SECRET_KEY` 和 `POSTGRES_PASSWORD`。 
+  - 保存文件，然后将其重命名为 `.env`（去掉 .txt 扩展名） 
+- 打开 [docker-compose.yml 模板](https://raw.githubusercontent.com/TandoorRecipes/recipes/refs/heads/develop/docs/install/docker/plain/docker-compose.yml)
+  - 复制文本，然后继续阅读。 
 
-### 3. Creating the Container
-- In DSM, open `Container Manager`. Click on `Project`. 
-- Click `Create` to create a new project. Fill out the following fields: 
-  - `Name`: `tandoor_recipes` or similar. 
-  - `Path`: select your `recipes` folder. If you have been following along `/docker/recipes`
-  - `Source`: Select `Create docker-compose.yml`. A textbox will appear. 
+### 3. 创建容器
+- 在 DSM 中，打开 `Container Manager`。点击 `Project`。 
+- 点击 `Create` 创建新项目。填写以下字段： 
+  - `Name`：`tandoor_recipes` 或类似名称。 
+  - `Path`：选择你的 `recipes` 文件夹。如果你一直按步骤操作，则为 `/docker/recipes`
+  - `Source`：选择 `Create docker-compose.yml`。将出现一个文本框。 
 
-### 4. Edit docker-compose.yml
-- Paste the `docker-compose.yml` into the `source` textbox. 
-- This file tells docker how to setup recipes. Docker will create two containers for recipes to work, `web_recipes` and `db_recipes`. They are all required and need to store and share data through the folders you created before.
-- Under the `web_recipes` section, you can add `ports` . This line specifies which external synology port will point to which internal docker port. Chose a free port to use and replace the first number with it. You will open recipes by browsing to http://your.synology.ip:chosen.port, e.g. http://192.168.1.1:2000
-- If you want to use port 2000 you would edit the `ports` to `2000:80`
+### 4. 编辑 docker-compose.yml
+- 将 `docker-compose.yml` 粘贴到 `source` 文本框中。 
+- 该文件告诉 Docker 如何设置 recipes。Docker 会为 recipes 运行创建两个容器：`web_recipes` 和 `db_recipes`。它们都是必需的，并且需要通过你之前创建的文件夹来存储和共享数据。
+- 在 `web_recipes` 部分下，你可以添加 `ports`。此行指定哪个群晖外部端口将指向哪个 Docker 内部端口。选择一个空闲端口并使用它替换第一个数字。你将通过浏览 http://your.synology.ip:chosen.port 来打开 recipes，例如 http://192.168.1.1:2000
+- 如果你想使用 2000 端口，应将 `ports` 编辑为 `2000:80`
 	```
 	ports:
 		- "2000:80"
  	```
 
-### 5. Finishing up
-- Click `Next`. 
-- Synology will take you to a `web portal settings` page. Skip this page by clicking `Next`. 
-  - If you enable this option then the container will not build because your specified port will be used by the Web Service. The Container already comes with nginx configured to serve files so you do not need the `web portal settings`. 
-- You'll see a `Summary` page. Review and click `Done`. 
-- The project will begin being built and should finish. 
+### 5. 完成
+- 点击 `Next`。 
+- 群晖会带你进入 `web portal settings` 页面。点击 `Next` 跳过此页面。 
+  - 如果你启用此选项，容器将无法构建，因为你指定的端口会被 Web 服务占用。容器已自带配置好用于提供文件的 nginx，因此你不需要 `web portal settings`。 
+- 你将看到 `Summary` 页面。检查后点击 `Done`。 
+- 项目将开始构建并应能完成。 
 	```bash
 	Container recipes-db_recipes-1 Starting
 	Container recipes-db_recipes-1 Started
@@ -62,56 +62,56 @@ volume1/docker/
 	Container recipes-web_recipes-1 Started
 	Exit Code: 0
 	```
-  - If you get an error, review the error and fix. A common reason it might fail is because you did not create the folders specified in the directory tree in step 1.
-- If you notice that `web_recipes` cannot connect to the database there is probably a misconfiguration in you Firewall, see next section.
-- Browse to 192.168.1.1:2000 or whatever your IP and port are
+  - 如果出现错误，请查看错误并修复。失败的一个常见原因是你没有创建第 1 步目录树中指定的文件夹。
+- 如果你发现 `web_recipes` 无法连接数据库，可能是防火墙配置有误，请参阅下一节。
+- 浏览至 192.168.1.1:2000 或你的 IP 和端口
 
-### 6. Firewall
-You need to set up firewall rules in order for the `recipes_web` container to be able to connect to the `recipes_db` container.
+### 6. 防火墙
+你需要设置防火墙规则，以便 `recipes_web` 容器能够连接到 `recipes_db` 容器。
 
-- Control Panel -> Security -> Firewall -> Edit Rules -> Create
-	-  Ports: All
- 		-  if you only want to allow the database port 5432, you'll need to create 2 rules to allow ingoing and outgoing port (and eventually also specify ip more restrictive)
-	-  Source IP: Specific IP -> Select -> Subnet
-		- insert docker network ip (can be found in the docker application, network tab)
-		- Example: IP address: 172.18.0.0 and Subnet mask/Prefix length: 255.255.255.0
-	-  Action: Allow
-- Save and make sure it's above the deny rules
-- If you want to skip the SSL Setup via Reverse Proxy you'll also need to allow access to the port you used to expose the container (e.g. 2000 in this example).
-	-  Ports: 2000
-	-  Source: depends on how broad the access should be
-	-  Action: Allow
+- 控制面板 -> 安全性 -> 防火墙 -> 编辑规则 -> 创建
+	-  端口：全部
+ 		-  如果你只想允许数据库端口 5432，你需要创建 2 条规则以允许入站和出站端口（最终还可能更严格地指定 IP）
+	-  源 IP：特定 IP -> 选择 -> 子网
+		- 输入 Docker 网络 IP（可在 Docker 应用的网络标签页中找到）
+		- 示例：IP 地址：172.18.0.0，子网掩码/前缀长度：255.255.255.0
+	-  操作：允许
+- 保存并确保它位于拒绝规则之上
+- 如果你想跳过通过反向代理进行 SSL 设置，你还需要允许访问用于暴露容器的端口（例如本例中的 2000）。
+	-  端口：2000
+	-  来源：取决于访问范围应有多宽
+	-  操作：允许
 
-### 7. Additional SSL Setup
-Easiest way is to do it via Reverse Proxy.
+### 7. 附加 SSL 设置
+最简单的方法是通过反向代理进行。
 
-- Control Panel -> Login Portal -> Advanced -> Reverse Proxy
-- Create
-	- insert name
-	- Source:
-		- Protocol: HTTPS
-		- Hostname: URL if you access from outside, otherwise ip in network
-		- Port: The port you want to access, has to be a different one that the one in the docker-compose file
-		- HSTS can be enabled
-	- Destination:
-		- Protocol: HTTP
-		- Hostname: localhost
-		- Port: port in docker-compose file
-	- Click on Custom Header and press Create -> Websocket
-	- Save
-- Control Panel -> Security -> Firewall -> Edit Rules -> Create
-	- Ports: Select form a list of built-in applications -> Select -> You find your Reverse Proxy, enable it
-	- Source IP: Depends, All allows access from outside, i use specific to only connect in my network
-	- Action: Allow
-- Save and make sure it's above the deny rules
+- 控制面板 -> 登录门户 -> 高级 -> 反向代理
+- 创建
+	- 输入名称
+	- 源：
+		- 协议：HTTPS
+		- 主机名：如果从外部访问则为 URL，否则为网络中的 IP
+		- 端口：你想要访问的端口，必须与 docker-compose 文件中的端口不同
+		- 可以启用 HSTS
+	- 目标：
+		- 协议：HTTP
+		- 主机名：localhost
+		- 端口：docker-compose 文件中的端口
+	- 点击自定义标头，然后按创建 -> WebSocket
+	- 保存
+- 控制面板 -> 安全性 -> 防火墙 -> 编辑规则 -> 创建
+	- 端口：从内置应用程序列表中选择 -> 选择 -> 找到你的反向代理，启用它
+	- 源 IP：视情况而定，全部允许从外部访问，我使用特定 IP 以便仅在我的网络中连接
+	- 操作：允许
+- 保存并确保它位于拒绝规则之上
 	
-### 8. Deprecated Guides
+### 8. 已弃用的指南
 
-The following are older guides that may be useful if you are running older versions of DSM. 
+以下是较旧的指南，如果你运行的是旧版本 DSM，它们可能会有用。 
 
-- The following documentation was provided by 
-@therealschimmi in [this issue discussion](https://github.com/vabene1111/recipes/issues/98#issuecomment-643062907).
+- 以下文档由 
+@therealschimmi 在[此问题讨论](https://github.com/vabene1111/recipes/issues/98#issuecomment-643062907)中提供。
 
-- There is also this 
+- 还有这份 
 ([word](https://github.com/vabene1111/recipes/files/6708738/Tandoor.on.a.Synology.Disk.Station.docx), 
-[pdf](https://github.com/vabene1111/recipes/files/6901601/Tandoor.on.a.Synology.Disk.Station.pdf)) awesome and very detailed guide provided by @DiversityBug.
+[pdf](https://github.com/vabene1111/recipes/files/6901601/Tandoor.on.a.Synology.Disk.Station.pdf)) 由 @DiversityBug 提供的极好且非常详细的指南。

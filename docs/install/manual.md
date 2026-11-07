@@ -1,34 +1,34 @@
-# Manual installation instructions
+# 手动安装说明
 
-These instructions are inspired from a standard django/gunicorn/postgresql instructions ([for example](https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu-16-04))
-
-!!! warning
-    Make sure to use at least Python 3.12 or higher, and ensure that `pip` is associated with Python 3. Depending on your system configuration, using `python` or `pip` might default to Python 2. Make sure your machine has at least 2048 MB of memory; otherwise, the `yarn build` process may fail with the error: `FATAL ERROR: Reached heap limit - Allocation failed: JavaScript heap out of memory`.
+这些说明受标准的 django/gunicorn/postgresql 安装说明启发（[例如](https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu-16-04)）
 
 !!! warning
-    These instructions are **not** regularly reviewed and might be outdated.
+    请确保使用至少 Python 3.12 或更高版本，并确保 `pip` 与 Python 3 关联。根据你的系统配置，使用 `python` 或 `pip` 可能会默认指向 Python 2。确保你的机器至少有 2048 MB 内存；否则 `yarn build` 过程可能会失败，并报错：`FATAL ERROR: Reached heap limit - Allocation failed: JavaScript heap out of memory`。
 
-## Prerequisites
+!!! warning
+    这些说明**不会**定期审核，可能已经过时。
 
-Setup user: `sudo useradd recipes`
+## 前提条件
 
-Update the repositories and upgrade your OS: `sudo apt update && sudo apt upgrade -y`
+设置用户：`sudo useradd recipes`
 
-Install all prerequisits `sudo apt install -y git curl python3 python3-pip python3-venv nginx`
+更新软件源并升级操作系统：`sudo apt update && sudo apt upgrade -y`
 
-Get the last version from the repository: `git clone https://github.com/vabene1111/recipes.git -b master`
+安装所有前提依赖 `sudo apt install -y git curl python3 python3-pip python3-venv nginx`
 
-Move it to the `/var/www` directory: `mv recipes /var/www`
+从仓库获取最新版本：`git clone https://github.com/vabene1111/recipes.git -b master`
 
-Change to the directory: `cd /var/www/recipes`
+将其移动到 `/var/www` 目录：`mv recipes /var/www`
 
-Give the user permissions: `chown -R recipes:www-data /var/www/recipes`
+切换到该目录：`cd /var/www/recipes`
 
-Create virtual env: `python3 -m venv /var/www/recipes`
+授予用户权限：`chown -R recipes:www-data /var/www/recipes`
 
-Activate virtual env: `source /var/www/recipes/bin/activate`
+创建虚拟环境：`python3 -m venv /var/www/recipes`
 
-Install Javascript Tools (nodejs >= 12 required)
+激活虚拟环境：`source /var/www/recipes/bin/activate`
+
+安装 Javascript 工具（需要 nodejs >= 12）
 ```shell
 ### Just use one of these possibilites!
 # Using Ubuntu
@@ -50,34 +50,34 @@ curl -fsSL https://rpm.nodesource.com/setup_lts.x | sudo bash -
 sudo npm install --global yarn
 ```
 
-!!! info "NodeJS installation issues"
-    If you run into problems with the NodeJS installation, please refer to the [official documentation](https://github.com/nodesource/distributions/blob/master/README.md).
+!!! info "NodeJS 安装问题"
+    如果你在 NodeJS 安装过程中遇到问题，请参考[官方文档](https://github.com/nodesource/distributions/blob/master/README.md)。
 
-### Install postgresql requirements
+### 安装 postgresql 依赖
 
 ```shell
 sudo apt install -y libpq-dev postgresql
 ```
 
-### Install LDAP requirements
+### 安装 LDAP 依赖
 
 ```shell
 sudo apt install -y libsasl2-dev python3-dev libldap2-dev libssl-dev
 ```
 
-### Install project requirements
+### 安装项目依赖
 
-!!! warning "Update"
-    Dependencies change with most updates so the following steps need to be re-run with every update or else the application might stop working.
-    See section [Updating](#updating) below.
+!!! warning "更新"
+    依赖会随着大多数更新而变化，因此以下步骤需要在每次更新时重新运行，否则应用可能会停止工作。
+    参见下方的[更新](#updating)一节。
 
-Using binaries from the virtual env:
+使用虚拟环境中的二进制文件：
 
 ```shell
 /var/www/recipes/bin/pip3 install -r requirements.txt
 ```
 
-You will also need to install front end requirements and build them. For this navigate to the `./vue3` folder and run
+你还需要安装前端依赖并构建它们。为此，请进入 `./vue3` 文件夹并运行
 
 ```shell
 cd ./vue3
@@ -85,13 +85,13 @@ yarn install
 yarn build
 ```
 
-## Setup postgresql
+## 设置 postgresql
 
 ```shell
 sudo -u postgres psql
 ```
 
-In the psql console:
+在 psql 控制台中：
 
 ```sql
 CREATE DATABASE djangodb;
@@ -111,40 +111,40 @@ ALTER USER djangouser WITH SUPERUSER;
 exit
 ```
 
-Download the `.env` configuration file and **edit it accordingly**.
+下载 `.env` 配置文件并**相应地编辑它**。
 ```shell
 wget https://raw.githubusercontent.com/vabene1111/recipes/develop/.env.template -O /var/www/recipes/.env
 ```
 
-Things to edit:
+需要编辑的内容：
 
-- `SECRET_KEY`: use something secure (generate it with `base64 /dev/urandom | head -c50` f.e.).
-- `POSTGRES_HOST`: probably 127.0.0.1.
-- `POSTGRES_PASSWORD`: the password we set earlier when setting up djangodb.
-- `STATIC_URL`, `MEDIA_URL`: these will be in `/var/www/recipes`, under `/staticfiles/` and `/mediafiles/` respectively.
+- `SECRET_KEY`：使用安全的内容（例如用 `base64 /dev/urandom | head -c50` 生成）。
+- `POSTGRES_HOST`：可能是 127.0.0.1。
+- `POSTGRES_PASSWORD`：我们之前设置 djangodb 时设置的密码。
+- `STATIC_URL`、`MEDIA_URL`：它们将分别位于 `/var/www/recipes` 下的 `/staticfiles/` 和 `/mediafiles/`。
 
-## Initialize the application
+## 初始化应用
 
-Execute `export $(cat /var/www/recipes/.env |grep "^[^#]" | xargs)` to load variables from `/var/www/recipes/.env`
+执行 `export $(cat /var/www/recipes/.env |grep "^[^#]" | xargs)` 从 `/var/www/recipes/.env` 加载变量
 
-Execute `bin/python3 manage.py migrate`
+执行 `bin/python3 manage.py migrate`
 
-and revert superuser from postgres:
+并将 postgres 中的超级用户还原：
 
 ```
 sudo -u postgres psql` and `ALTER USER djangouser WITH NOSUPERUSER;
 exit
 ```
 
-Generate static files: `bin/python3 manage.py collectstatic --no-input` and `bin/python3 manage.py collectstatic_js_reverse` and remember the folder where files have been copied.
+生成静态文件：`bin/python3 manage.py collectstatic --no-input` 和 `bin/python3 manage.py collectstatic_js_reverse`，并记住文件被复制到的文件夹。
 
-## Setup web services
+## 设置 Web 服务
 
 ### gunicorn
 
-Create a service that will start gunicorn at boot: `sudo nano /etc/systemd/system/gunicorn_recipes.service`
+创建一个在启动时启动 gunicorn 的服务：`sudo nano /etc/systemd/system/gunicorn_recipes.service`
 
-And enter these lines:
+并输入以下行：
 
 ```service
 [Unit]
@@ -165,17 +165,17 @@ ExecStart=/var/www/recipes/bin/gunicorn --error-logfile /tmp/gunicorn_err.log --
 WantedBy=multi-user.target
 ```
 
-*Note*: `-error-logfile /tmp/gunicorn_err.log --log-level debug --capture-output` are useful for debugging and can be removed later
+*注意*：`-error-logfile /tmp/gunicorn_err.log --log-level debug --capture-output` 对调试很有用，之后可以移除
 
-*Note2*: Fix the path in the `ExecStart` line to where you gunicorn and recipes are
+*注意2*：将 `ExecStart` 行中的路径修正为你的 gunicorn 和 recipes 所在的位置
 
-Finally, run `sudo systemctl enable --now gunicorn_recipes`. You can check that the service is correctly started with `systemctl status gunicorn_recipes`
+最后，运行 `sudo systemctl enable --now gunicorn_recipes`。你可以使用 `systemctl status gunicorn_recipes` 检查服务是否已正确启动
 
 ### nginx
 
-Now we tell nginx to listen to a new port and forward that to gunicorn. `sudo nano /etc/nginx/conf.d/recipes.conf`
+现在我们要让 nginx 监听一个新端口，并将其转发给 gunicorn。`sudo nano /etc/nginx/conf.d/recipes.conf`
 
-And enter these lines:
+并输入以下行：
 
 ```nginx
 server {
@@ -201,12 +201,12 @@ location /media/ {
 }
 ```
 
-*Note*: Enter the correct path in static and proxy_pass lines.
+*注意*：在 static 和 proxy_pass 行中输入正确的路径。
 
-Reload nginx : `sudo systemctl reload nginx`
+重新加载 nginx：`sudo systemctl reload nginx`
 
-## Updating
-In order to update the application you will need to run the following commands (probably best to put them into a small script).
+## 更新 {#updating}
+为了更新应用，你需要运行以下命令（最好将它们放进一个小脚本中）。
 
 ```shell
 # change directory

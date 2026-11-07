@@ -1,64 +1,63 @@
-There is currently no "good" way of backing up your data implemented in the application itself.
-This mean that you will be responsible for backing up your data.
+目前应用本身并没有实现「好」的备份方式。
+这意味着备份数据将由您自己负责。
 
-It is planned to add a "real" backup feature similar to applications like homeassistant where a snapshot can be
-downloaded and restored through the web interface.
+计划加入一个「真正」的备份功能，类似 HomeAssistant 这类应用：可以在 Web 界面中
+下载和恢复快照。
 
 !!! warning
-    When developing a new backup strategy, make sure to also test the restore process!
+    制定新的备份策略时，请务必同时测试恢复流程！
 
-## Database
-Please use any standard way of backing up your database. For most systems this can be achieved by using a dump
-command that will create an SQL file with all the required data.
+## 数据库
+请使用任何标准的数据库备份方式。对大多数系统而言，可以使用 dump
+命令生成包含全部所需数据的 SQL 文件。
 
-Please refer to your Database System documentation.
+请参阅您所用数据库系统的文档。
 
-I personally use a [little script](https://github.com/vabene1111/DockerPostgresBackups) that I have created to automatically pull SQL dumps from a postgresql database.
-It is **neither** well tested nor documented so use at your own risk.
-I would recommend using it only as a starting place for your own backup strategy.
+我个人使用自己编写的一个[小脚本](https://github.com/vabene1111/DockerPostgresBackups)，从 postgresql 数据库自动拉取 SQL 转储。
+它**既**没有经过充分测试，也**没有**完善文档，请自行承担使用风险。
+我建议只把它作为您自己备份策略的起点。
 
-## Mediafiles
-The only Data this application stores apart from the database are the media files (e.g. images) used in your
-recipes.
+## 媒体文件
+除数据库之外，本应用唯一存储的数据就是菜谱中使用的媒体文件（例如图片）。
 
-They can be found in the mediafiles mounted directory (depending on your installation).
+它们位于挂载的媒体文件目录中（取决于您的安装方式）。
 
-To create a backup of those files simply copy them elsewhere. Do it the other way around for restoring.
+要备份这些文件，只需将它们复制到别处。恢复时反向操作即可。
 
-The filenames consist of `<random uuid4>_<recipe_id>`. In case you screw up really badly this can help restore data.
+文件名的格式为 `<random uuid4>_<recipe_id>`。万一您搞砸得很严重，这有助于恢复数据。
 
-## Manual backup from docker build
-The standard docker build of tandoor uses postgresql as the back end database. This can be backed up using a function called "dumpall". This generates a .SQL file containing a list of commands for a postgresql server to use to rebuild your database. You will also need to back up the media files separately.
+## 从 Docker 构建进行手动备份
+Tandoor 的标准 Docker 构建使用 postgresql 作为后端数据库。可以使用名为「dumpall」的功能对其进行备份。它会生成一个 .SQL 文件，其中包含供 postgresql 服务器重建数据库使用的命令列表。您还需要单独备份媒体文件。
 
-Making a full copy of the docker directory can work as a back up, but only if you know you will be using the same hardware, os, and postgresql version upon restore. If not, then the different version of postgresql won't be compatible with the existing tables.
-You can back up from docker even when the tandoor container is failing, so long as the postgresql database has started successfully. When using this backup method, ensure that your recipes have imported successfully. One user reported only the titles and images importing on first try, requiring a second run of the import command.
+完整复制 Docker 目录也可以作为一种备份方式，但前提是您确定恢复时会使用相同的硬件、操作系统和 postgresql 版本。否则，不同版本的 postgresql 将无法与现有表兼容。
+即使 Tandoor 容器出现故障，只要 postgresql 数据库已成功启动，您仍然可以从 Docker 进行备份。使用此备份方式时，请确认菜谱已成功导入。有用户反映，第一次尝试时只导入了标题和图片，需要再次运行导入命令。
 
-the following commands assume that your docker-compose files are in a folder called "docker". replace "docker_db_recipes_1" with the name of your db container. The commands also assume you use a backup name of pgdump.sql. It's a good idea to include a date in this filename, so that successive backups do not get deleted.
-To back up:
+以下命令假设您的 docker-compose 文件位于名为「docker」的文件夹中。请将「docker_db_recipes_1」替换为您的 db 容器名称。这些命令还假设您使用 pgdump.sql 作为备份文件名。建议在文件名中包含日期，以免后续备份被删除。
+备份：
 ```
 sudo docker exec -t docker_db_recipes_1 pg_dumpall -U djangouser > pgdump.sql
 
 ```
 
-To restore:
+恢复：
 ```
 cat pgdump.sql | sudo docker exec -i docker_db_recipes_1 psql postgres -U djangouser
 
 ```
-This connects to the postgres table instead of the actual djangodb table, as the import function needs to delete the table, which can't be dropped off you're connected to it.
+此命令连接的是 postgres 数据库而非实际的 djangodb 数据库，因为导入功能需要删除该表，而您在连接该表时无法将其删除。
 
-## Backup using export and import
-You can now export recipes from Tandoor using the export function. This method requires a working web interface.
-1. Click on a recipe
-2. Click on the three meatballs then export
-3. Select the all recipes toggle and then export. This should download a zip file.
+## 使用导出和导入进行备份
+现在您可以使用导出功能从 Tandoor 导出菜谱。此方式需要有可用的 Web 界面。
+1. 点击一个菜谱
+2. 点击三个点图标，然后选择导出
+3. 选择全部菜谱开关，然后导出。这应会下载一个 zip 文件。
 
-Import:
-Go to Import > from app > tandoor and select the zip file you want to import from.
+导入：
+前往 导入 > 来自应用 > tandoor，选择要从中导入的 zip 文件。
 
-## Backing up using the pgbackup container
-You can add [pgbackup](https://hub.docker.com/r/prodrigestivill/postgres-backup-local) to manage the scheduling and automatic backup of your postgres database.
-Modify the below to match your environment and add it to your `docker-compose.yml`
+## 使用 pgbackup 容器进行备份
+您可以添加 [pgbackup](https://hub.docker.com/r/prodrigestivill/postgres-backup-local) 来管理 postgres 数据库的定时与自动备份。
+按您的环境修改以下内容，并将其加入 `docker-compose.yml`
 
 ``` yaml
   pgbackup:
@@ -77,4 +76,4 @@ Modify the below to match your environment and add it to your `docker-compose.ym
     volumes:
       - backups/postgres:/backups
 ```
-You can manually initiate a backup by running `docker exec -it pgbackup ./backup.sh`
+您可以通过运行 `docker exec -it pgbackup ./backup.sh` 手动启动一次备份。

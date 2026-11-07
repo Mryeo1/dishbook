@@ -1,20 +1,20 @@
-!!! info "Community Contributed"
-    The examples in this section were contributed by members of the community.
-    This page especially contains some setups that might help you if you really want to go down a certain path but none
-    of the examples are supported (as I simply am not able to give you support for them).
+!!! info "社区贡献"
+    本节中的示例由社区成员贡献。
+    本页面尤其包含一些配置方案，如果你确实想走某条特定的路，它们可能会有所帮助，但
+    没有任何示例受到支持（因为我实在无法为它们提供支持）。
 
-!!! danger "Tandoor 2 Compatibility"
-    This guide has not been verified/tested for Tandoor 2, which now integrates a nginx service inside the default docker container and exposes its service on port 80 instead of 8080.
+!!! danger "Tandoor 2 兼容性"
+    本指南尚未针对 Tandoor 2 进行验证/测试，Tandoor 2 现在在默认 Docker 容器内集成了 nginx 服务，并将其服务暴露在 80 端口而不是 8080 端口。
 
-## Apache + Traefik + Sub-Path
+## Apache + Traefik + 子路径
 
-This guide was contributes by [incaseoftrouble](https://github.com/incaseoftrouble) in [Issue #266](https://github.com/vabene1111/recipes/issues/266)
+本指南由 [incaseoftrouble](https://github.com/incaseoftrouble) 在 [Issue #266](https://github.com/vabene1111/recipes/issues/266) 中贡献
 
-My setup is docker-compose / traefik / apache / recipes. Swapping out apache for nginx should be straightforward.
+我的配置是 docker-compose / traefik / apache / recipes。将 apache 换成 nginx 应该很直接。
 
-Relevant parts:
+相关部分：
 
-docker-compose:
+docker-compose：
 ```yaml
   apache:
     # omitting other config
@@ -56,17 +56,17 @@ apache:
   </Directory>
 ```
 
-I used two paths `<sub path>` and `<www path>` for simplicity. In my case I have `<sub path> = recipes` and `<www path> = serve/recipes`. One could also change the matching rules of traefik to have everything under one path.
+为简单起见，我使用了两个路径 `<sub path>` 和 `<www path>`。在我的情况下 `<sub path> = recipes`，`<www path> = serve/recipes`。也可以更改 traefik 的匹配规则，将所有内容放在一个路径下。
 
-I left out the TLS config in this example for simplicity.
+为简单起见，我在本示例中省略了 TLS 配置。
 
-## Docker + Apache + Sub-Path
+## Docker + Apache + 子路径
 
-The following could prove to be useful if you are not using Traefik, but instead run Apache as your reverse proxy to route all calls for a shared (sub)domain to a sub path, e.g. https://mydomain.tld/tandoor
+如果你不使用 Traefik，而是运行 Apache 作为反向代理，将共享（子）域名的所有调用路由到一个子路径，例如 https://mydomain.tld/tandoor，那么以下内容可能会很有用
 
-As a side note, I am using [Blocky](https://0xerr0r.github.io/blocky/) + [Consul](https://hub.docker.com/r/hashicorp/consul) + [Registrator](https://hub.docker.com/r/gliderlabs/registrator) as a DNS solution.
+顺便说一句，我使用 [Blocky](https://0xerr0r.github.io/blocky/) + [Consul](https://hub.docker.com/r/hashicorp/consul) + [Registrator](https://hub.docker.com/r/gliderlabs/registrator) 作为 DNS 解决方案。
 
-The relevant Apache config:
+相关的 Apache 配置：
 ```
     <Location /tandoor>
         # in case you want to restrict access to specific IP addresses:
@@ -93,7 +93,7 @@ The relevant Apache config:
         ProxyPreserveHost On
     </Location>
 ```
-and the relevant section from the docker-compose.yml:
+以及 docker-compose.yml 中的相关部分：
 ```
    tandoor:
      restart: always
@@ -123,7 +123,7 @@ and the relevant section from the docker-compose.yml:
        - postgres
 ```
 
-The relevant docker-compose.yml for Registrator, Consul, and Blocky, and Autoheal:
+用于 Registrator、Consul、Blocky 和 Autoheal 的相关 docker-compose.yml：
 ```
   consul:
     image: hashicorp/consul
@@ -199,7 +199,7 @@ The relevant docker-compose.yml for Registrator, Consul, and Blocky, and Autohea
     container_name: autoheal
 
 ```
-as well as a snippet of the Blocky configuration:
+以及 Blocky 配置的片段：
 ```
 conditional:
   fallbackUpstream: false
@@ -210,4 +210,4 @@ conditional:
 
 ## WSL
 
-If you want to install Tandoor on the Windows Subsystem for Linux you can find a detailed post here: <https://github.com/TandoorRecipes/recipes/issues/1733>.
+如果你想在 Windows Subsystem for Linux 上安装 Tandoor，可以在这里找到详细的帖子：<https://github.com/TandoorRecipes/recipes/issues/1733>。

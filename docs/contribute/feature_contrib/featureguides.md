@@ -1,7 +1,7 @@
-If there is a not a guide below for the type of feature you wish to implement then please add a request on [github](https://github.com/TandoorRecipes/recipes/issues) for the type of feature you wish to contribute. 
+如果下面没有你想要实现的功能类型对应的指南，请在 [github](https://github.com/TandoorRecipes/recipes/issues) 上为你希望贡献的功能类型添加一个请求。
 
-Alternatively please document the process of adding a feature type if you have already contributed a feature.
+或者，如果你已经贡献过某个功能，请记录添加该功能类型的过程。
 
-# Feature Contribution Guides
+# 功能贡献指南
 
-- [Import / Export Integrations Guide](/contribute/feature_contrib/integration.md)
+- [导入 / 导出集成指南](/contribute/feature_contrib/integration.md)

@@ -1,8 +1,8 @@
-site_name: Tandoor Recipes
-site_description: Tandoor Recipe Documentation
+site_name: 食单（Dishbook）
+site_description: 食单的安装、配置与使用文档
 site_author: vabene1111
-repo_url: https://github.com/vabene1111/recipes
-edit_uri: https://github.com/vabene1111/recipes/tree/develop/docs
+repo_url: https://github.com/Mryeo1/dishbook
+edit_uri: https://github.com/Mryeo1/dishbook/tree/main/docs
 extra_css:
   - stylesheets/extra.css
 
@@ -22,49 +22,52 @@ markdown_extensions:
   - admonition
   - pymdownx.highlight
   - pymdownx.superfences
+  # headings read in chinese, but the cross references between pages still point
+  # at the english ids they were written against. attr_list pins those ids.
+  - attr_list
 
 plugins:
   - include-markdown
   - search
 
 nav:
-  - Home: 'index.md'
-  - Installation:
+  - 首页: 'index.md'
+  - 安装:
       - Docker: install/docker.md
       - Unraid: install/unraid.md
-      - Synology: install/synology.md
+      - 群晖 Synology: install/synology.md
       - Kubernetes: install/kubernetes.md
-      - KubeSail or PiBox: install/kubesail.md
+      - KubeSail 或 PiBox: install/kubesail.md
       - TrueNAS Portainer: install/truenas_portainer.md
       - WSL: install/wsl.md
       - ArchLinux: install/archlinux.md
       - HomeAssistant: install/homeassistant.md
-      - Manual: install/manual.md
-      - Other setups: install/other.md
-  - Features:
-      - Templating: features/templating.md
-      - Shopping: features/shopping.md
-      - Authentication: features/authentication.md
-      - Automation: features/automation.md
-      - Connectors: features/connectors.md
-      - Storages and Sync: features/external_recipes.md
-      - Import/Export: features/import_export.md
-      - Telegram bot: features/telegram_bot.md
+      - 手动安装: install/manual.md
+      - 其他部署方式: install/other.md
+  - 功能:
+      - 模板: features/templating.md
+      - 购物清单: features/shopping.md
+      - 账号与登录: features/authentication.md
+      - 自动计划: features/automation.md
+      - 连接器: features/connectors.md
+      - 存储与同步: features/external_recipes.md
+      - 导入与导出: features/import_export.md
+      - Telegram 机器人: features/telegram_bot.md
       - AI: features/ai.md
-  - System:
-      - Configuration: system/configuration.md
-      - Updating: system/updating.md
-      - Migrate sqlite to postgres: system/migration_sqlite-postgres.md
-      - Permission System: system/permissions.md
-      - Backup: system/backup.md
-  - Contributing:
-      - Overview: contribute/contribute.md
-      - Translations: contribute/translations.md
-      - Documentation: contribute/documentation.md
-      - Code: contribute/guidelines.md
-      - Installation: contribute/installation.md
-      - IDE Setup:
+  - 系统:
+      - 配置项: system/configuration.md
+      - 升级: system/updating.md
+      - 从 sqlite 迁移到 postgres: system/migration_sqlite-postgres.md
+      - 权限系统: system/permissions.md
+      - 备份: system/backup.md
+  - 参与开发:
+      - 概述: contribute/contribute.md
+      - 翻译: contribute/translations.md
+      - 文档: contribute/documentation.md
+      - 代码规范: contribute/guidelines.md
+      - 开发环境安装: contribute/installation.md
+      - 编辑器配置:
           - VSCode: contribute/vscode.md
           - PyCharm: contribute/pycharm.md
-      - Related Projects: contribute/related.md
-  - FAQ: faq.md
+      - 相关项目: contribute/related.md
+  - 常见问题: faq.md
