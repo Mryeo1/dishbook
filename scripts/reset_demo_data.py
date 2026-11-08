@@ -40,6 +40,12 @@ DEMO_FIRST_NAME = '陈晓'
 DEMO_LAST_NAME = ''
 DEMO_SPACE_NAME = '陈晓的厨房'
 
+# second account, so the Django admin is reachable on a freshly seeded instance
+ADMIN_USERNAME = 'admin'
+ADMIN_EMAIL = 'admin@example.com'
+ADMIN_FIRST_NAME = '管理员'
+ADMIN_SPACE_NAME = '管理空间'
+
 # Deletion order matters: children first, then the things they point at.
 # (logs and imports -> plans -> books -> recipe sub-objects -> recipes -> tree data)
 DELETE_ORDER = [
@@ -72,16 +78,22 @@ def wipe_content():
                 print(f'  cleared {count:>4} {model.__name__}')
 
 
-def create_demo_user():
+def create_account(username, email, first_name, space_name, staff=False):
+    """Create (or repair) an account together with its own space.
+
+    The demo needs two of them: an ordinary user that owns the seeded content,
+    and a superuser so a reader can open the Django admin without having to run
+    ``createsuperuser`` first.
+    """
     with scopes_disabled(), transaction.atomic():
-        user = User.objects.filter(username=DEMO_USERNAME).first()
+        user = User.objects.filter(username=username).first()
         if user is None:
-            user = User(username=DEMO_USERNAME, email=DEMO_EMAIL)
-        user.email = DEMO_EMAIL
-        user.first_name = DEMO_FIRST_NAME
-        user.last_name = DEMO_LAST_NAME
-        user.is_staff = False
-        user.is_superuser = False
+            user = User(username=username, email=email)
+        user.email = email
+        user.first_name = first_name
+        user.last_name = ''
+        user.is_staff = staff
+        user.is_superuser = staff
         user.is_active = True
         user.set_password(DEMO_PASSWORD)
         user.save()
@@ -89,10 +101,10 @@ def create_demo_user():
         space = Space.objects.filter(created_by=user).first()
         if space is None:
             from cookbook.helper.permission_helper import create_space_for_user
-            create_space_for_user(user, name=DEMO_SPACE_NAME)
+            create_space_for_user(user, name=space_name)
             space = Space.objects.filter(created_by=user).first()
         else:
-            space.name = DEMO_SPACE_NAME
+            space.name = space_name
             space.save()
 
         # this build requires a household per space, otherwise the UI sends the
@@ -101,7 +113,7 @@ def create_demo_user():
         user_space = UserSpace.objects.filter(user=user, space=space).first()
         household = Household.objects.filter(space=space).first()
         if household is None:
-            household = Household.objects.create(name=f'{DEMO_SPACE_NAME}的家人', space=space)
+            household = Household.objects.create(name=f'{space_name}的家人', space=space)
         if user_space and user_space.household_id != household.id:
             user_space.household = household
             user_space.save(update_fields=['household'])
@@ -113,20 +125,21 @@ def create_demo_user():
         try:
             from allauth.account.models import EmailAddress
             EmailAddress.objects.update_or_create(
-                user=user, email=DEMO_EMAIL,
+                user=user, email=email,
                 defaults={'verified': True, 'primary': True},
             )
         except Exception as e:  # pragma: no cover - allauth optional at runtime
             print('  (email verification skipped:', e, ')')
 
-        print(f'user: {user.username} / {DEMO_EMAIL} (staff={user.is_staff}, super={user.is_superuser})')
+        print(f'user: {user.username} / {email} (staff={user.is_staff}, super={user.is_superuser})')
         print(f'space: {space.pk} {space.name}')
         return user, space
 
 
 if __name__ == '__main__':
     wipe_content()
-    create_demo_user()
+    create_account(DEMO_USERNAME, DEMO_EMAIL, DEMO_FIRST_NAME, DEMO_SPACE_NAME)
+    create_account(ADMIN_USERNAME, ADMIN_EMAIL, ADMIN_FIRST_NAME, ADMIN_SPACE_NAME, staff=True)
     with scopes_disabled():
         print('after:', Recipe.objects.count(), 'recipes /', Food.objects.count(), 'foods')
-    print(f'password: {DEMO_PASSWORD}')
+    print(f'password for both accounts: {DEMO_PASSWORD}')

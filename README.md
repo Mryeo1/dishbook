@@ -1,5 +1,7 @@
 # 食单 · Dishbook
 
+![CI](https://github.com/Mryeo1/dishbook/actions/workflows/ci-dishbook.yml/badge.svg)
+
 一个**中文优先**的菜谱与用餐计划应用，可以管理菜谱、安排一周三餐、自动汇总购物清单，并支持多人协作。
 
 本项目基于开源项目 [Tandoor Recipes](https://github.com/TandoorRecipes/recipes) 二次开发：后端沿用其 Django 数据模型与 API，前端做了完整的本地化与界面重做。**不是从零开始的产品**，改动范围见下文。
@@ -18,7 +20,7 @@
 | 深色模式 | 日历与条目改用 CSS 变量，深色主题下不再出现白色板块 | `MealPlanView.vue` 的 `--mp-*` token |
 | 空状态 | 整屏没有安排时浮出「暂无安排 / 点任意日期添加」，不再让人误以为加载失败 | `MealPlanView.vue`、`utils/mealplanLayout.ts` |
 | 顶栏配色 | 由金色改为中性（浅色白底 / 深色 `#212121`），强调色只留在按钮与链接上 | `vue3/src/vuetify.ts`、`apps/tandoor/Tandoor.vue` |
-| 工程化 | 抽出日历布局纯函数并补 22 个单测；补齐运维脚本；修正 28 条失败用例中的 4 条、其余标注原因 | `vue3/src/utils/mealplanLayout.ts`、`scripts/`、`docs/KNOWN_ISSUES.md` |
+| 工程化 | 抽出日历布局纯函数并补 22 个单测；补一键启动与运维脚本；新增真正会跑的 CI（语言包校验 + pytest + vitest + 构建）；修正 28 条失败用例中的 4 条、其余标注原因 | `vue3/src/utils/mealplanLayout.ts`、`scripts/`、`.github/workflows/ci-dishbook.yml`、`docs/KNOWN_ISSUES.md` |
 | 文档 | 40 篇上游文档译为中文；另附使用手册（单文件 HTML，可直接打印）与已知问题清单 | `docs/`、`mkdocs.yml`、`docs/食单使用手册.html` |
 
 ## 技术栈
@@ -30,25 +32,26 @@
 
 ## 本地运行
 
+需要 Python 3.12 与 Node 22。
+
 ```bash
-# 1. 依赖
+# 1. 后端依赖
 python -m venv .venv
 .venv/Scripts/activate          # macOS / Linux: source .venv/bin/activate
 pip install -r requirements.txt
-cd vue3 && npm install && cd ..
 
-# 2. 配置：参考 .env.template，至少需要 SECRET_KEY、DEBUG、ALLOWED_HOSTS
-#    本仓库的 .env 里有可直接跑起来的本地配置（已被 git 忽略）
+# 2. 一条命令：生成 .env → 迁移 → 装前端依赖 → 构建 → 启动
+bash scripts/setup_demo.sh
 
-# 3. 数据库 + 前端构建
-python manage.py migrate
-bash scripts/build_frontend.sh  # 构建前端并同步到 staticfiles/
-
-# 4. 启动
-python manage.py runserver 127.0.0.1:8000
+# 想连演示数据一起（30 道菜谱、两周计划、2 张购物清单）
+bash scripts/setup_demo.sh --fresh
 ```
 
+脚本首次运行会从 `.env.example` 复制出 `.env` 并生成随机 `SECRET_KEY`，默认用 **SQLite**，不需要另起数据库服务。
+
 打开 http://127.0.0.1:8000 即可。演示账号：`chenxiao@example.com` / `Tandoor@2026`（普通用户），`admin@example.com` / `Tandoor@2026`（超级管理员）。
+
+> **两个 env 文件的区别**：`.env.example` 是开发用（SQLite、`DEBUG=1`）；`.env.template` 是上游给部署用的（PostgreSQL、`db_recipes` 主机名），照它复制会连不上库。生产部署见 `docs/DEPLOY.md`。
 
 > **改了前端却没生效？** `vite build` 之后必须重跑 `scripts/sync_static.py` **并重启 Django 进程**。原因有两个，都写进了脚本注释：whitenoise 在启动时缓存文件索引；`ManifestStaticFilesStorage` 会把 `manifest.json` 映射到一份冻结的 `manifest.<hash>.json` 副本。
 >
