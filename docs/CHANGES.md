@@ -98,3 +98,19 @@
 | 使用手册（单文件 HTML，9 张实拍截图内嵌，可离线分发与打印） | `docs/食单使用手册.html` |
 | 已知问题清单（19 条 xfail 的真实报错与判断） | `docs/KNOWN_ISSUES.md` |
 | 项目说明与运行方式 | `README.md`、`NOTICE.md` |
+
+## 九、可复现性（让陌生人能在十分钟内跑起来）
+
+| 内容 | 文件 |
+|---|---|
+| 新增开发用 env 模板：SQLite、`DEBUG=1`、随机 `SECRET_KEY` 由脚本生成 | `.env.example` |
+| `setup_demo.sh` 改为复制 `.env.example`（不再用面向部署的 `.env.template`），缺前端依赖时自动 `npm ci`，缺 Python 依赖时一句话报错而不是中途崩 | `scripts/setup_demo.sh` |
+| 新增真正会执行的 CI：语言包校验、pytest、vitest、`vite build` | `.github/workflows/ci-dishbook.yml` |
+| 删除上游传入的 4 个 workflow（`ci` / `build-docker` / `codeql-analysis` / `docs`）——它们全带 `if: github.repository_owner == 'TandoorRecipes'`，在派生仓库里每次运行都是 `skipped`，留着只会让人以为有 CI | `.github/workflows/`（删除 4 个） |
+| 移除上游传入的 `dependabot.yml`，并停用随之而来的自动 PR 分支 | `.github/dependabot.yml`（删除） |
+| 前端依赖统一到 npm：删除与 `package-lock.json` 并存的 `yarn.lock` | `vue3/yarn.lock`（删除） |
+
+两点需要说明：
+
+1. **上游的 4 个 workflow 全部带 `if: github.repository_owner == 'TandoorRecipes'`**，在这个仓库里每次运行都是 `skipped`，等于没有 CI。修它们没有意义（守卫仍在），所以直接删掉，另写一个不带守卫、只跑本项目关心的三件事的 workflow。
+2. **基线导入不完整。** 最初的 `chore: 导入 Tandoor Recipes 代码基线` 漏掉了 `cookbook/tests/`、`cookbook/serializer.py` 等上游文件，于是这些文件首次出现在后续的功能提交里（例如品牌改名那个提交里躺着 2270 行的 serializer）。仓库当前内容完整，但用 `git log --stat` 看单个提交时会看到不属于该主题的代码。这是导入时的操作失误，事后已在此说明，没有重建历史。

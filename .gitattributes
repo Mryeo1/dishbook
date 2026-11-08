@@ -15,5 +15,4 @@
 *.sqlite3 binary
 
 # generated / vendored files that must not be diffed as text
-yarn.lock -diff
 package-lock.json -diff
