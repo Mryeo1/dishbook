@@ -1,0 +1,79 @@
+name: CI
+
+# The workflows inherited from upstream all carry
+# `if: github.repository_owner == 'TandoorRecipes'`, so on a fork they are skipped
+# and the repository has no CI signal at all. This one is meant to actually run.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  i18n:
+    name: 语言包键对齐
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      # 纯标准库脚本，不装项目依赖，几秒跑完
+      - run: python scripts/check_i18n_keys.py --strict
+
+  backend:
+    name: 后端测试
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # python-ldap 没有 wheel，源码编译需要这几样
+      - name: 系统依赖
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            build-essential libldap2-dev libsasl2-dev libssl-dev
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: 安装 Python 依赖
+        run: pip install -r requirements.txt
+
+      # 用和本地开发完全相同的配置，顺带验证 .env.example 是能用的
+      - name: 生成 .env
+        run: cp .env.example .env
+
+      - name: pytest
+        run: pytest -q -n 4 --no-cov
+
+  frontend:
+    name: 前端测试与构建
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: vue3/package-lock.json
+
+      - name: 安装依赖
+        working-directory: vue3
+        run: npm ci --no-audit --no-fund
+
+      - name: vitest
+        working-directory: vue3
+        run: npm run test
+
+      # 构建过一遍才敢说"clone 下来能跑"，否则前端产物缺失要到运行时才发现
+      - name: vite build
+        working-directory: vue3
+        run: npm run build
