@@ -114,3 +114,22 @@
 
 1. **上游的 4 个 workflow 全部带 `if: github.repository_owner == 'TandoorRecipes'`**，在这个仓库里每次运行都是 `skipped`，等于没有 CI。修它们没有意义（守卫仍在），所以直接删掉，另写一个不带守卫、只跑本项目关心的三件事的 workflow。
 2. **基线导入不完整。** 最初的 `chore: 导入 Tandoor Recipes 代码基线` 漏掉了 `cookbook/tests/`、`cookbook/serializer.py` 等上游文件，于是这些文件首次出现在后续的功能提交里（例如品牌改名那个提交里躺着 2270 行的 serializer）。仓库当前内容完整，但用 `git log --stat` 看单个提交时会看到不属于该主题的代码。这是导入时的操作失误，事后已在此说明，没有重建历史。
+
+## 十、仓库卫生：把「别人的东西」清出去
+
+派生仓库最容易露怯的不是代码，而是没清的残留：别人的捐赠按钮、别人的议题模板、指回别人文档站的链接。这一轮逐项清理，原则是**清掉失效与误导，保留署名与出处**。
+
+| 处理 | 对象 |
+|---|---|
+| 删除 `FUNDING.yml`——把捐赠导向上游作者，在别人部署的实例里没有意义 | `.github/FUNDING.yml` |
+| 删除议题模板 11 个文件（含 4 个 `.bak` 残留），其中 `config.yml` 把 FAQ 指向上游站点 | `.github/ISSUE_TEMPLATE/` |
+| 删掉上游宣传图（金色顶栏、英文界面、品牌名仍是 Tandoor），首页改用本仓库真实截图 | `docs/preview.png` |
+| 文档首页重写：去掉 star / fork / discord / docker-pulls / demo 徽章，换成本仓库 CI 徽章；logo 本地化 | `docs/index.md`、`docs/assets/logo.png` |
+| 应用内帮助页：网站 / GitHub / 参与贡献 / 翻译四个入口改指本仓库，删除「赞助」按钮 | `vue3/src/components/display/HelpView.vue` |
+| 后台列表页的「?」帮助链接 9 处改指本仓库对应章节 | `cookbook/templatetags/custom_tags.py` |
+| 404 页「报告问题」、Markdown 语法示例、系统页升级链接改指本仓库 | `cookbook/templates/{404,markdown_info,system}.html` |
+| 文档里 11 处 `docs.tandoor.dev` 链接改为站内相对链接；顺带修好 2 处上游本来就坏的链接（`traefik.md` 不存在、kubesail 页的链接嵌套写法） | `docs/**` |
+| Docker 安装页顶部加范围声明：本分支未发布镜像，照此部署得到的是上游版本 | `docs/install/docker.md` |
+| `.env.template` 注释与 devcontainer 名称里的上游痕迹 | `.env.template`、`.devcontainer/devcontainer.json` |
+
+**保留不动的部分**：`LICENSE.md`、`NOTICE.md`、`CONTRIBUTERS.md`（上游贡献者名单，已加说明）、`docs/index.md` 的「关于本页」、系统页与导出文件里的上游署名，以及文档中引用具体上游 issue 编号的历史链接。这些是 GPLv3 与 Commons Clause 要求的出处标注，也是这个项目诚实的一部分——**删掉它们不是「去痕迹」，是换一个更严重的问题。**

@@ -1,39 +1,35 @@
 <h1 align="center">
   <br>
-  <a href="https://tandoor.dev"><img src="https://github.com/vabene1111/recipes/raw/develop/docs/logo_color.svg" height="256px" width="256px"></a>
+  <img src="assets/logo.png" height="128" width="128" alt="食单">
   <br>
   食单
   <br>
 </h1>
 
-<h4 align="center">让您从容管理不断增长的电子菜谱收藏的菜谱管理器。</h4>
+<h4 align="center">让您从容管理不断增长的电子菜谱收藏。</h4>
 
 !!! info "关于本页"
-    本页译自上游项目 [Tandoor Recipes](https://github.com/vabene1111/recipes) 的文档。
-    食单是基于 Tandoor 二次开发的版本：功能说明大体适用，但品牌、默认语言以及本仓库
-    相对上游的改动，请以 [改动记录](CHANGES.md) 和 [已知问题](KNOWN_ISSUES.md) 为准。
-    文中的 Discord、社区与路线图等内容仍指向上游项目。
+
+    食单基于上游项目 [Tandoor Recipes](https://github.com/TandoorRecipes/recipes) 二次开发，
+    本站文档译自上游，功能说明大体适用。品牌、默认语言以及本仓库相对上游的改动，
+    以 [改动记录](CHANGES.md) 和 [已知问题](KNOWN_ISSUES.md) 为准；文中提到的 Discord、
+    社区与路线图等内容仍指向上游项目。
 
 <p align="center">
-<a href="https://github.com/vabene1111/recipes/actions" target="_blank" rel="noopener noreferrer"><img src="https://github.com/vabene1111/recipes/workflows/Continuous%20Integration/badge.svg?branch=master" ></a>
-<a href="https://github.com/vabene1111/recipes/stargazers" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/github/stars/vabene1111/recipes" ></a>
-<a href="https://github.com/vabene1111/recipes/network/members" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/github/forks/vabene1111/recipes" ></a>
-<a href="https://discord.gg/RhzBrfWgtp" target="_blank" rel="noopener noreferrer"><img src="https://badgen.net/badge/icon/discord?icon=discord&label" ></a>
-<a href="https://hub.docker.com/r/vabene1111/recipes" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/docker/pulls/vabene1111/recipes" ></a>
-<a href="https://github.com/vabene1111/recipes/releases/latest" rel="noopener noreferrer"><img src="https://img.shields.io/github/v/release/vabene1111/recipes" ></a>
-<a href="https://app.tandoor.dev/e/demo-auto-login/" rel="noopener noreferrer"><img src="https://img.shields.io/badge/demo-available-success" ></a>
+<a href="https://github.com/Mryeo1/dishbook/actions/workflows/ci-dishbook.yml" target="_blank" rel="noopener noreferrer"><img src="https://github.com/Mryeo1/dishbook/actions/workflows/ci-dishbook.yml/badge.svg" alt="CI"></a>
+<a href="https://github.com/Mryeo1/dishbook/blob/main/LICENSE.md" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/license-GPLv3%20%2B%20Commons%20Clause-lightgrey" alt="License"></a>
+<img src="https://img.shields.io/badge/%E7%95%8C%E9%9D%A2-%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-brightgreen" alt="简体中文界面">
 </p>
 
 <p align="center">
-<a href="https://tandoor.dev" target="_blank" rel="noopener noreferrer">官网</a> •
-<a href="https://docs.tandoor.dev/install/docker/" target="_blank" rel="noopener noreferrer">安装</a> •
-<a href="https://docs.tandoor.dev/" target="_blank" rel="noopener noreferrer">文档</a> •
-<a href="https://app.tandoor.dev/e/demo-auto-login/" target="_blank" rel="noopener noreferrer">在线演示</a> •
-<a href="https://community.tandoor.dev" target="_blank" rel="noopener noreferrer">社区</a> •
-<a href="https://discord.gg/RhzBrfWgtp" target="_blank" rel="noopener noreferrer">Discord</a>
+<a href="install/docker.md">安装</a> •
+<a href="CHANGES.md">改动记录</a> •
+<a href="KNOWN_ISSUES.md">已知问题</a> •
+<a href="screenshots/home.png">界面截图</a> •
+<a href="https://github.com/Mryeo1/dishbook">源码</a>
 </p>
 
-![界面预览](preview.png)
+![界面预览](screenshots/home.png)
 
 ## 核心功能
 - 🥗 **管理菜谱**：编辑器快速且直观
@@ -57,7 +53,7 @@
 
 - 📱 针对**移动设备**优化
 - 🌍 感谢社区贡献，已支持多种**语言**
-- 📥️ 从众多其他[菜谱管理器](https://docs.tandoor.dev/features/import_export/)中**导入您的收藏**
+- 📥️ 从众多其他[菜谱管理器](features/import_export.md)中**导入您的收藏**
 - ➕ 还有**菜谱份数缩放、图片压缩、打印视图、超市分类**等更多功能
 
 本应用面向那些希望把菜谱收藏分享给亲友，或只是想井井有条地保存菜谱的用户。系统提供了基础的权限管理，但并不适合作为公开站点对外运行。

@@ -28,7 +28,7 @@
 ## PostgreSQL
 
 当您更改版本时，Postgres 不会自动升级数据库文件，需要手动干预。
-一种选择是手动[备份/恢复](https://docs.tandoor.dev/system/updating/#postgresql)数据库。
+一种选择是手动[备份/恢复](updating.md)数据库。
 
 升级数据库的完整选项列表见 [PostgreSQL 官方文档](https://www.postgresql.org/docs/current/upgrading.html)。
 

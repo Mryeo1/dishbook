@@ -15,7 +15,7 @@
 
 ## 议题与功能请求
 
-最基础但也最关键的贡献方式是报告议题，并在 [GitHub 议题](https://github.com/vabene1111/recipes/issues)上
+最基础但也最关键的贡献方式是报告议题，并在 [GitHub 议题](https://github.com/Mryeo1/dishbook/issues)上
 对想法和功能请求发表评论。
 
 没有反馈就不会有改进，所以不要犹豫，想说什么就说。

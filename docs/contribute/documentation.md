@@ -22,5 +22,5 @@
 
 ## 超低技术门槛
 
-用任何文字处理软件撰写你的文档（甚至制作一段视频！），然后[提出功能请求](https://github.com/vabene1111/recipes/issues)
+用任何文字处理软件撰写你的文档（甚至制作一段视频！），然后[提出功能请求](https://github.com/Mryeo1/dishbook/issues)
 附上你的文档并请求有人把该文档添加到 Tandoor 中。

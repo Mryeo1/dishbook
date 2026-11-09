@@ -320,7 +320,7 @@ IMPRINT_URL=
 ### 认证
 
 所有与认证有关的可配置变量。
-你可以在[专门的文档页面](https://docs.tandoor.dev/features/authentication/)上找到一些示例。
+你可以在[专门的文档页面](../features/authentication.md)上找到一些示例。
 
 #### 默认权限
 
@@ -527,7 +527,7 @@ FDC_API_KEY=DEMO_KEY
 - `DISABLE_EXTERNAL_CONNECTORS` 是一个全局开关，用于完全禁用外部连接器。
 - `EXTERNAL_CONNECTORS_QUEUE_SIZE` 是当工作进程处理不过来时保存在内存中的变更数量。
 
-（外部）连接器用于将 Tandoor 中的状态同步到其他服务。更多信息可参见[此处](https://docs.tandoor.dev/features/connectors/)。
+（外部）连接器用于将 Tandoor 中的状态同步到其他服务。更多信息可参见[此处](../features/connectors.md)。
 
 ```env
 DISABLE_EXTERNAL_CONNECTORS=0  # Default 0 (false), set to 1 (true) to disable connectors

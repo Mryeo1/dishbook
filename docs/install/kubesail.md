@@ -8,7 +8,7 @@
 
 <!-- A portion of every PiBox sale goes toward supporting Tandoor development. -->
 
-KubeSail 模板在很大程度上基于 [Kubernetes 安装]([docs/install/k8s](https://github.com/vabene1111/recipes/tree/develop/docs/install/k8s))配置
+KubeSail 模板在很大程度上基于 [Kubernetes 安装](kubernetes.md)配置
 
 ## 快速开始
 

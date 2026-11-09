@@ -12,7 +12,7 @@ AI 目前用于少数几项聚焦的任务：
 
 ## 默认配置
 默认情况下，每个空间都启用了 AI 功能。每个空间的每月支出上限约为 1 USD。
-可通过 [配置变量](https://docs.tandoor.dev/system/configuration/#ai-integration) 修改此项
+可通过 [配置变量](../system/configuration.md) 修改此项
 
 你可以随时使用 django 管理后台更改这些设置。如果你不在意 AI 成本，可以填入非常高的上限，或为你的提供商禁用成本跟踪。
 该上限在每个月的第一天重置。 

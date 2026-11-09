@@ -22,11 +22,11 @@ makepkg -si
 ```
 或使用你喜欢的 AUR 助手。
 
-2. 设置 PostgreSQL 数据库和用户，方法见：https://docs.tandoor.dev/install/manual/#setup-postgresql
+2. 设置 PostgreSQL 数据库和用户，方法见：manual.md
 
 3. 在 `/etc/tandoor/tandoor.conf` 中配置服务。
 
-4. 重新安装软件包，或按照[官方说明](https://docs.tandoor.dev/install/manual/#initialize-the-application)让 Tandoor 创建其数据库表。
+4. 重新安装软件包，或按照[官方说明](manual.md)让 Tandoor 创建其数据库表。
 
 5. 可选地配置反向代理。已提供 Nginx 的配置，但你也可以使用 Traefik、Apache 等。
 编辑 `/etc/nginx/sites-available/tandoor.conf`。你可能需要改用另一个 `server_name`，或配置 TLS。然后：

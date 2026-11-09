@@ -8,7 +8,7 @@
 该模块以最大程度的灵活性和可扩展性为设计目标，可轻松添加新的集成，
 让你能够按任意所需的格式导入和导出菜谱。
 
-觉得缺少某个重要的集成？只需查看 [集成相关问题](https://github.com/vabene1111/recipes/issues?q=is%3Aissue+is%3Aopen+label%3Aintegration)，或者
+觉得缺少某个重要的集成？只需查看 [集成相关问题](https://github.com/Mryeo1/dishbook/issues?q=is%3Aissue+is%3Aopen+label%3Aintegration)，或者
 在你喜欢的集成缺失时新开一个 issue。
 
 !!! info "导出"

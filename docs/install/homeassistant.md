@@ -25,7 +25,7 @@
 
 ### 配置
 
-以下环境变量可通过附加组件选项配置。关于如何填写这些变量，请参阅 [Docker 文档](https://docs.tandoor.dev/install/docker/)。
+以下环境变量可通过附加组件选项配置。关于如何填写这些变量，请参阅 [Docker 文档](docker.md)。
 
 ```yaml
 Required :

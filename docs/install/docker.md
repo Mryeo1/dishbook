@@ -1,8 +1,15 @@
+!!! warning "这份指南部署的是上游镜像"
+
+    本分支没有发布自己的容器镜像，`vabene1111/recipes` 镜像里跑的是上游代码。
+    按本页部署得到的是上游版本；要运行本仓库的改动（中文界面、重做的日历），
+    请走[源码安装](manual.md)。本页保留是为了说明上游的部署方式，文中的
+    Docker Hub、版本标签与「官方」均指上游项目。
+
 !!! success "推荐安装"
     推荐使用 Docker 搭建本应用。这并不意味着其他方式不好，但它是唯一
     由官方维护并定期接受测试的方式。
 
-本指南展示了一些使用 Docker 和 docker compose 的基础配置方案。关于配置选项，请参阅[配置页面](https://docs.tandoor.dev/system/configuration/)。
+本指南展示了一些使用 Docker 和 docker compose 的基础配置方案。关于配置选项，请参阅[配置页面](../system/configuration.md)。
 
 ## **版本**
 
@@ -47,9 +54,9 @@ docker run -d \
 1. 从下面的示例中选择你的 `docker-compose.yml`。
 2. 使用 `wget` 下载 `.env` 配置文件
     ```shell
-    wget https://raw.githubusercontent.com/vabene1111/recipes/develop/.env.template -O .env
+    wget https://raw.githubusercontent.com/Mryeo1/dishbook/main/.env.template -O .env
     ```
-3. **相应地编辑它**（你必须设置 `SECRET_KEY`、`ALLOWED_HOSTS` 和 `POSTGRES_PASSWORD`），参见[配置页面](https://docs.tandoor.dev/system/configuration/)。
+3. **相应地编辑它**（你必须设置 `SECRET_KEY`、`ALLOWED_HOSTS` 和 `POSTGRES_PASSWORD`），参见[配置页面](../system/configuration.md)。
 4. 使用 `docker-compose up -d` 启动容器。
 
 ### **Plain**
@@ -58,7 +65,7 @@ docker run -d \
 请注意，如果宿主机上的 80 端口有其他 Web 服务器或容器在运行，将会阻止其工作。
 
 ```shell
-wget https://raw.githubusercontent.com/vabene1111/recipes/develop/docs/install/docker/plain/docker-compose.yml
+wget https://raw.githubusercontent.com/Mryeo1/dishbook/main/docs/install/docker/plain/docker-compose.yml
 ```
 
 ~~~yaml
@@ -76,10 +83,10 @@ wget https://raw.githubusercontent.com/vabene1111/recipes/develop/docs/install/d
 !!! info
     Traefik 的配置可能有些令人困惑。
     请参考[其出色的文档](https://doc.traefik.io/traefik/)。如果这没有帮助，
-    [这个小示例](traefik.md)可能适合你。
+    [这个小示例](docker/traefik-nginx/docker-compose.yml)可能适合你。
 
 ```shell
-wget https://raw.githubusercontent.com/vabene1111/recipes/develop/docs/install/docker/traefik-nginx/docker-compose.yml
+wget https://raw.githubusercontent.com/Mryeo1/dishbook/main/docs/install/docker/traefik-nginx/docker-compose.yml
 ```
 
 ~~~yaml
@@ -106,7 +113,7 @@ LETSENCRYPT_EMAIL=
 ```
 
 ```shell
-wget https://raw.githubusercontent.com/vabene1111/recipes/develop/docs/install/docker/nginx-proxy/docker-compose.yml
+wget https://raw.githubusercontent.com/Mryeo1/dishbook/main/docs/install/docker/nginx-proxy/docker-compose.yml
 ```
 
 ~~~yaml

@@ -80,7 +80,7 @@ ALLAUTH_TRUSTED_PROXY_COUNT=2
 `GUNICORN_MEDIA`，以允许应用容器自身提供媒体文件服务。
 
 ## 为什么会出现提示数据库文件与服务器不兼容的错误？
-您的 Postgres 版本已被升级。请参阅[更新 PostgreSQL](https://docs.tandoor.dev/system/updating/#postgresql)
+您的 Postgres 版本已被升级。请参阅[更新 PostgreSQL](system/updating.md)
 
 
 ## 为什么文本/Markdown 预览与最终菜谱看起来不一样？

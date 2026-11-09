@@ -12,7 +12,7 @@
     为了让本应用能够向外部提供商推送数据，它需要存储认证信息。
     请尽可能使用只读/独立账户或应用密码。
 
-有关配置请参阅 [配置](https://docs.tandoor.dev/system/configuration/#connectors)
+有关配置请参阅 [配置](../system/configuration.md)
 
 ## 当前连接器
 

@@ -10,7 +10,7 @@
 从 https://docs.docker.com/desktop/install/windows-install/ 安装 Docker
 在提示时，请务必在配置页面选择「Use WSL 2 instead of Hyper-V」选项
 
-按照说明在 Docker 上安装 Tandoor。使用 Docker 的 Tandoor 安装说明来自 https://docs.tandoor.dev/install/docker/
+按照说明在 Docker 上安装 Tandoor。使用 Docker 的 Tandoor 安装说明来自 docker.md
 
 如果你使用 Docker Desktop，可能会遇到以下错误：
 /usr/bin/docker-credential-desktop.exe: Invalid argument
