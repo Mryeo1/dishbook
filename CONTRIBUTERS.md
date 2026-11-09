@@ -1,5 +1,10 @@
 # Contributers
 
+!!! note "这是上游的贡献者名单"
+
+    本文件沿用自上游 [Tandoor Recipes](https://github.com/TandoorRecipes/recipes)，
+    列的是上游项目的贡献者，用于保留署名。本仓库自身的改动见 [改动记录](docs/CHANGES.md)。
+
 Many thanks to everyone who contributed to this project! If you add something or help out feel free to add yourself
 to this list.
 
