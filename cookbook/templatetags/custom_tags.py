@@ -111,15 +111,15 @@ def recipe_last(recipe, user):
 @register.simple_tag
 def page_help(page_name):
     help_pages = {
-        'edit_storage': 'https://docs.tandoor.dev/features/external_recipes/',
-        'list_connector_config': 'https://docs.tandoor.dev/features/connectors/',
-        'new_connector_config': 'https://docs.tandoor.dev/features/connectors/',
-        'edit_connector_config': 'https://docs.tandoor.dev/features/connectors/',
-        'view_shopping': 'https://docs.tandoor.dev/features/shopping/',
-        'view_import': 'https://docs.tandoor.dev/features/import_export/',
-        'data_import_url': 'https://docs.tandoor.dev/features/import_export/',
-        'view_export': 'https://docs.tandoor.dev/features/import_export/',
-        'list_automation': 'https://docs.tandoor.dev/features/automation/',
+        'edit_storage': 'https://github.com/Mryeo1/dishbook/blob/main/docs/features/external_recipes.md',
+        'list_connector_config': 'https://github.com/Mryeo1/dishbook/blob/main/docs/features/connectors.md',
+        'new_connector_config': 'https://github.com/Mryeo1/dishbook/blob/main/docs/features/connectors.md',
+        'edit_connector_config': 'https://github.com/Mryeo1/dishbook/blob/main/docs/features/connectors.md',
+        'view_shopping': 'https://github.com/Mryeo1/dishbook/blob/main/docs/features/shopping.md',
+        'view_import': 'https://github.com/Mryeo1/dishbook/blob/main/docs/features/import_export.md',
+        'data_import_url': 'https://github.com/Mryeo1/dishbook/blob/main/docs/features/import_export.md',
+        'view_export': 'https://github.com/Mryeo1/dishbook/blob/main/docs/features/import_export.md',
+        'list_automation': 'https://github.com/Mryeo1/dishbook/blob/main/docs/features/automation.md',
     }
 
     link = help_pages.get(page_name, '')

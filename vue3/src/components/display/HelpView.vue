@@ -39,10 +39,10 @@
                         <h2>{{ $t('WelcomeToTandoor2') }}</h2>
                         <p class="mt-3">{{ $t('HelpText01') }}</p>
 
-                        <v-btn class="mt-2" color="primary" href="https://tandoor.dev" target="_blank" prepend-icon="fa-solid fa-globe">
+                        <v-btn class="mt-2" color="primary" href="https://github.com/Mryeo1/dishbook" target="_blank" prepend-icon="fa-solid fa-globe">
                             {{ $t('Website') }}
                         </v-btn>
-                        <v-btn class="mt-2 ms-2" color="info" href="https://github.com/TandoorRecipes/recipes" target="_blank" prepend-icon="fa-solid fa-code-branch">GitHub
+                        <v-btn class="mt-2 ms-2" color="info" href="https://github.com/Mryeo1/dishbook" target="_blank" prepend-icon="fa-solid fa-code-branch">GitHub
                         </v-btn>
 
                         <v-alert class="mt-3" border="start" variant="tonal" color="success"
@@ -50,10 +50,8 @@
                             <v-alert-title>{{ $t('DidYouKnow') }}</v-alert-title>
                             {{ $t('HelpOpenSourceText') }}
                             <br/>
-                            <v-btn class="mt-2" color="secondary" href="https://docs.tandoor.dev/contribute/contribute/" target="_blank" prepend-icon="fa-solid fa-code-branch">
+                            <v-btn class="mt-2" color="secondary" href="https://github.com/Mryeo1/dishbook/issues" target="_blank" prepend-icon="fa-solid fa-code-branch">
                                 {{ $t('Contribute') }}
-                            </v-btn>
-                            <v-btn class="mt-2 ms-2" color="success" href="https://github.com/sponsors/vabene1111" target="_blank" prepend-icon="fa-solid fa-dollar-sign">{{ $t('Sponsor') }}
                             </v-btn>
                         </v-alert>
 
@@ -252,13 +250,13 @@
                     <v-window-item value="translations">
                         <div class="d-flex align-center justify-space-between">
                             <h2>{{ $t('Translations') }}</h2>
-                            <v-btn variant="tonal" color="primary" href="https://translate.tandoor.dev" target="_blank" prepend-icon="fa-solid fa-language">
+                            <v-btn variant="tonal" color="primary" href="https://github.com/Mryeo1/dishbook/tree/main/vue3/src/locales" target="_blank" prepend-icon="fa-solid fa-language">
                                 {{ $t('help_translate') }}
                             </v-btn>
                         </div>
                         <p class="mt-3">
                             {{ $t('HelpTranslateIntro') }}
-                            <a href="https://translate.tandoor.dev" target="_blank">Weblate</a>
+                            <a href="https://github.com/Mryeo1/dishbook/tree/main/vue3/src/locales" target="_blank">locale</a>
                             {{ $t('HelpTranslateCoverage', {coverage: minCoverage}) }}
                         </p>
 
@@ -371,7 +369,7 @@ const mobileMenuItems = ref([
 
 // Weblate directory names use underscore format (nb_NO, zh_Hant)
 function weblateUrl(filename: string): string {
-    return `https://translate.tandoor.dev/projects/tandoor/-/${filename}/`
+    return `https://github.com/Mryeo1/dishbook/tree/main/vue3/src/locales/projects/tandoor/-/${filename}/`
 }
 
 function barColor(pct: number): string {
